@@ -1,0 +1,44 @@
+{
+    "name": "Status",
+    "fields": [
+        {
+            "fieldName": "reference",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "products",
+            "otherEntityName": "product",
+            "otherEntityRelationshipName": "status"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "stocks",
+            "otherEntityName": "stock",
+            "otherEntityRelationshipName": "status"
+        }
+    ],
+    "changelogDate": "20190417072415",
+    "entityTableName": "status",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "productmicroservice",
+    "applications": "*",
+    "microserviceName": "productmicroservice"
+}

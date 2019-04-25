@@ -1,0 +1,47 @@
+{
+    "name": "Tax",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "rate",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "taxCategory",
+            "otherEntityName": "taxCategory",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "taxType",
+            "otherEntityName": "taxType",
+            "otherEntityRelationshipName": "tax"
+        }
+    ],
+    "changelogDate": "20190417072419",
+    "entityTableName": "tax",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "productmicroservice",
+    "applications": "*",
+    "microserviceName": "productmicroservice"
+}

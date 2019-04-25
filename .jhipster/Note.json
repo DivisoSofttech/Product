@@ -1,0 +1,31 @@
+{
+    "name": "Note",
+    "fields": [
+        {
+            "fieldName": "matter",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dateOfCreation",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "product",
+            "otherEntityName": "product",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190417072414",
+    "entityTableName": "note",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "productmicroservice",
+    "applications": "*",
+    "microserviceName": "productmicroservice"
+}

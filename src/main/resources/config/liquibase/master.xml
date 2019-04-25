@@ -5,6 +5,26 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190417072408_added_entity_Product.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190417072409_added_entity_Barcode.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190417072410_added_entity_BarcodeType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190417072411_added_entity_Uom.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190417072412_added_entity_Category.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190417072413_added_entity_Label.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190417072414_added_entity_Note.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190417072415_added_entity_Status.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190417072416_added_entity_Stock.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190417072417_added_entity_StockLine.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190417072418_added_entity_TaxCategory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190417072419_added_entity_Tax.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190417072420_added_entity_TaxType.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20190417072408_added_entity_constraints_Product.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190417072410_added_entity_constraints_BarcodeType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190417072414_added_entity_constraints_Note.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190417072416_added_entity_constraints_Stock.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190417072417_added_entity_constraints_StockLine.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190417072419_added_entity_constraints_Tax.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190417072420_added_entity_constraints_TaxType.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>
