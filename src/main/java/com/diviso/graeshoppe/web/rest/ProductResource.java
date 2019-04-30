@@ -1,12 +1,16 @@
 package com.diviso.graeshoppe.web.rest;
+import com.diviso.graeshoppe.domain.Product;
 import com.diviso.graeshoppe.service.ProductService;
 import com.diviso.graeshoppe.web.rest.errors.BadRequestAlertException;
 import com.diviso.graeshoppe.web.rest.util.HeaderUtil;
 import com.diviso.graeshoppe.web.rest.util.PaginationUtil;
 import com.diviso.graeshoppe.service.dto.ProductDTO;
+import com.diviso.graeshoppe.service.mapper.ProductMapper;
+
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -17,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
@@ -34,6 +38,9 @@ public class ProductResource {
     private final Logger log = LoggerFactory.getLogger(ProductResource.class);
 
     private static final String ENTITY_NAME = "productmicroserviceProduct";
+    
+    @Autowired
+    private ProductMapper productMapper; 
 
     private final ProductService productService;
 
@@ -141,6 +148,14 @@ public class ProductResource {
         Page<ProductDTO> page = productService.search(query, pageable);
         HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/products");
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+    
+    @PostMapping("/products/toDto")
+    public ResponseEntity<List<ProductDTO>> listToDto(@RequestBody List<Product> products) {
+    	 log.debug("REST request to convert to DTO");
+    	List<ProductDTO> dtos = new ArrayList<>();
+    	products.forEach(a -> {dtos.add(productMapper.toDto(a));});
+    	return ResponseEntity.ok().body(dtos);
     }
 
 }
