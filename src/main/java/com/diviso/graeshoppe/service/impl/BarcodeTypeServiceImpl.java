@@ -33,7 +33,7 @@ public class BarcodeTypeServiceImpl implements BarcodeTypeService {
 
     private final BarcodeTypeSearchRepository barcodeTypeSearchRepository;
 
-    public BarcodeTypeServiceImpl(BarcodeTypeRepository barcodeTypeRepository, BarcodeTypeMapper barcodeTypeMapper, BarcodeTypeSearchRepository barcodeTypeSearchRepository) {
+    public BarcodeTypeServiceImpl(BarcodeTypeRepository barcodeTypeRepository, BarcodeTypeSearchRepository barcodeTypeSearchRepository, BarcodeTypeMapper barcodeTypeMapper) {
         this.barcodeTypeRepository = barcodeTypeRepository;
         this.barcodeTypeMapper = barcodeTypeMapper;
         this.barcodeTypeSearchRepository = barcodeTypeSearchRepository;

@@ -1,0 +1,7 @@
+SELECT  productmicroservice.product.reference, productmicroservice.product.name, productmicroservice.stock_line.buy_price 
+FROM  productmicroservice.product 
+INNER JOIN productmicroservice.stock_line ON  productmicroservice.product.id =  productmicroservice.stock_line.product_id 
+
+
+productmicroservice
+

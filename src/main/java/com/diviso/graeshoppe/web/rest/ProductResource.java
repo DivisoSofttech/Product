@@ -4,10 +4,13 @@ import com.diviso.graeshoppe.service.ProductService;
 import com.diviso.graeshoppe.web.rest.errors.BadRequestAlertException;
 import com.diviso.graeshoppe.web.rest.util.HeaderUtil;
 import com.diviso.graeshoppe.web.rest.util.PaginationUtil;
+
 import com.diviso.graeshoppe.service.dto.ProductDTO;
 import com.diviso.graeshoppe.service.mapper.ProductMapper;
 
 import io.github.jhipster.web.util.ResponseUtil;
+import net.sf.jasperreports.engine.JRException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +28,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Product.
@@ -42,6 +44,7 @@ public class ProductResource {
     @Autowired
     private ProductMapper productMapper; 
 
+  
     private final ProductService productService;
 
     public ProductResource(ProductService productService) {
@@ -157,5 +160,35 @@ public class ProductResource {
     	products.forEach(a -> {dtos.add(productMapper.toDto(a));});
     	return ResponseEntity.ok().body(dtos);
     }
-
-}
+    
+    
+    /**
+     * GET  /pdf/ProdutsReport : get the pdf of all the products.
+     *  
+     * @return the byte[]
+     * @return the ResponseEntity with status 200 (OK) and the pdf of products in body
+     */
+    
+	 @GetMapping("/pdf/produtsReport") 
+	 public ResponseEntity<byte[]>  getPdfAllProdutsWithPrice() {
+	 
+	  log.debug("REST request to get a pdf of products");
+	 
+	  byte[] pdfContents = null;
+	 
+	  try
+      {
+		pdfContents=productService.getPdfAllProdutsWithPrice();
+      }catch (JRException e) {
+           e.printStackTrace();
+       }
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        String fileName ="productsReport.pdf";
+		headers.add("content-disposition", "attachment; filename=" + fileName);
+		ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(
+		            pdfContents, headers, HttpStatus.OK);	        
+       return response;
+	 }
+} 
+	 
