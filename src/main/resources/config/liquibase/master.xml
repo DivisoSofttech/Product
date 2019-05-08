@@ -18,6 +18,8 @@
     <include file="config/liquibase/changelog/20190417072418_added_entity_TaxCategory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190417072419_added_entity_Tax.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190417072420_added_entity_TaxType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190508014847_added_entity_StockCurrent.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190508014848_added_entity_StockDiary.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20190417072408_added_entity_constraints_Product.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190417072410_added_entity_constraints_BarcodeType.xml" relativeToChangelogFile="false"/>
@@ -26,5 +28,7 @@
     <include file="config/liquibase/changelog/20190417072417_added_entity_constraints_StockLine.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190417072419_added_entity_constraints_Tax.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190417072420_added_entity_constraints_TaxType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190508014848_added_entity_constraints_StockDiary.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190508014847_added_entity_constraints_StockCurrent.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

@@ -78,6 +78,8 @@ public class Product implements Serializable {
     @OneToMany(mappedBy = "product")
     private Set<Note> notes = new HashSet<>();
     @OneToMany(mappedBy = "product")
+    private Set<StockDiary> stockDiaries = new HashSet<>();
+    @OneToMany(mappedBy = "product")
     private Set<StockLine> stockLines = new HashSet<>();
     @ManyToMany
     @JoinTable(name = "product_labels",
@@ -90,6 +92,10 @@ public class Product implements Serializable {
                joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
     private Set<Category> categories = new HashSet<>();
+
+    @OneToOne(mappedBy = "product")
+    @JsonIgnore
+    private StockCurrent stockCurrent;
 
     @ManyToOne
     @JsonIgnoreProperties("products")
@@ -315,6 +321,31 @@ public class Product implements Serializable {
         this.notes = notes;
     }
 
+    public Set<StockDiary> getStockDiaries() {
+        return stockDiaries;
+    }
+
+    public Product stockDiaries(Set<StockDiary> stockDiaries) {
+        this.stockDiaries = stockDiaries;
+        return this;
+    }
+
+    public Product addStockDiaries(StockDiary stockDiary) {
+        this.stockDiaries.add(stockDiary);
+        stockDiary.setProduct(this);
+        return this;
+    }
+
+    public Product removeStockDiaries(StockDiary stockDiary) {
+        this.stockDiaries.remove(stockDiary);
+        stockDiary.setProduct(null);
+        return this;
+    }
+
+    public void setStockDiaries(Set<StockDiary> stockDiaries) {
+        this.stockDiaries = stockDiaries;
+    }
+
     public Set<StockLine> getStockLines() {
         return stockLines;
     }
@@ -349,17 +380,17 @@ public class Product implements Serializable {
         return this;
     }
 
-   /* public Product addLabels(Label label) {
-        this.labels.add(label);
-        label.getProducts().add(this);
-        return this;
-    }
-
-    public Product removeLabels(Label label) {
-        this.labels.remove(label);
-        label.getProducts().remove(this);
-        return this;
-    }*/
+//    public Product addLabels(Label label) {
+//        this.labels.add(label);
+//        label.getProducts().add(this);
+//        return this;
+//    }
+//
+//    public Product removeLabels(Label label) {
+//        this.labels.remove(label);
+//        label.getProducts().remove(this);
+//        return this;
+//    }
 
     public void setLabels(Set<Label> labels) {
         this.labels = labels;
@@ -374,20 +405,33 @@ public class Product implements Serializable {
         return this;
     }
 
-   /* public Product addCategory(Category category) {
-        this.categories.add(category);
-        category.getProducts().add(this);
-        return this;
-    }
-
-    public Product removeCategory(Category category) {
-        this.categories.remove(category);
-        category.getProducts().remove(this);
-        return this;
-    }*/
+//    public Product addCategory(Category category) {
+//        this.categories.add(category);
+//        category.getProducts().add(this);
+//        return this;
+//    }
+//
+//    public Product removeCategory(Category category) {
+//        this.categories.remove(category);
+//        category.getProducts().remove(this);
+//        return this;
+//    }
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
+    }
+
+    public StockCurrent getStockCurrent() {
+        return stockCurrent;
+    }
+
+    public Product stockCurrent(StockCurrent stockCurrent) {
+        this.stockCurrent = stockCurrent;
+        return this;
+    }
+
+    public void setStockCurrent(StockCurrent stockCurrent) {
+        this.stockCurrent = stockCurrent;
     }
 
     public Status getStatus() {

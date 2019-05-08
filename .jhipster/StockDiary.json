@@ -1,0 +1,40 @@
+{
+    "name": "StockDiary",
+    "fields": [
+        {
+            "fieldName": "dateOfCreation",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "units",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "price",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "isBuy",
+            "fieldType": "Boolean"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "product",
+            "otherEntityName": "product",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "stockDiaries"
+        }
+    ],
+    "changelogDate": "20190508014848",
+    "entityTableName": "stock_diary",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "productmicroservice",
+    "applications": "*",
+    "microserviceName": "productmicroservice"
+}

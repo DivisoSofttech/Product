@@ -77,6 +77,12 @@
         },
         {
             "relationshipType": "one-to-many",
+            "relationshipName": "stockDiaries",
+            "otherEntityName": "stockDiary",
+            "otherEntityRelationshipName": "product"
+        },
+        {
+            "relationshipType": "one-to-many",
             "relationshipName": "stockLines",
             "otherEntityName": "stockLine",
             "otherEntityRelationshipName": "product"
@@ -96,6 +102,13 @@
             "otherEntityName": "category",
             "otherEntityField": "id",
             "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "stockCurrent",
+            "otherEntityName": "stockCurrent",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "product"
         },
         {
             "relationshipName": "status",

@@ -61,6 +61,18 @@ entity StockLine{
 	locationId String, // note
 	supplierRef Long
 }
+
+entity StockCurrent{
+units Double
+}
+entity StockDiary{
+dateOfCreation LocalDate,
+units Double,
+price Double,
+isBuy Boolean
+
+}
+
 entity TaxCategory{
 	name String required, //unique
 	description String
@@ -74,11 +86,13 @@ entity TaxType {
 	taxType String
 }
 relationship OneToOne{
-	Product{barcode} to Barcode
+	Product{barcode} to Barcode,
+	StockCurrent{product} to Product{stockCurrent} 
 	
 }
 relationship OneToMany{
 	Product{notes} to Note,
+	Product{stockDiaries} to StockDiary{product},
 	Status{products} to Product,
 	Status{stocks} to Stock,
 	TaxCategory{taxes} to Tax,

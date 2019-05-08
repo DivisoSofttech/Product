@@ -1,0 +1,29 @@
+{
+    "name": "StockCurrent",
+    "fields": [
+        {
+            "fieldName": "units",
+            "fieldType": "Double"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "product",
+            "otherEntityName": "product",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "stockCurrent"
+        }
+    ],
+    "changelogDate": "20190508014847",
+    "entityTableName": "stock_current",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "productmicroservice",
+    "applications": "*",
+    "microserviceName": "productmicroservice"
+}
