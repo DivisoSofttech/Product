@@ -53,7 +53,11 @@ public class StockDiaryResource {
         if (stockDiaryDTO.getId() != null) {
             throw new BadRequestAlertException("A new stockDiary cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        StockDiaryDTO result = stockDiaryService.save(stockDiaryDTO);
+        StockDiaryDTO result1 = stockDiaryService.save(stockDiaryDTO);
+        if (result1.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        StockDiaryDTO result = stockDiaryService.save(result1);
         return ResponseEntity.created(new URI("/api/stock-diaries/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);

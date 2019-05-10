@@ -53,7 +53,11 @@ public class StockCurrentResource {
         if (stockCurrentDTO.getId() != null) {
             throw new BadRequestAlertException("A new stockCurrent cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        StockCurrentDTO result = stockCurrentService.save(stockCurrentDTO);
+        StockCurrentDTO result1 = stockCurrentService.save(stockCurrentDTO);
+        if (result1.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        StockCurrentDTO result = stockCurrentService.save(result1);
         return ResponseEntity.created(new URI("/api/stock-currents/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
