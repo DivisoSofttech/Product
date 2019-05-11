@@ -43,6 +43,8 @@ public class ProductDTO implements Serializable {
 
     private Double reOrderLevel;
 
+    private Boolean outOfStock;
+
 
     private Long barcodeId;
 
@@ -166,6 +168,14 @@ public class ProductDTO implements Serializable {
         this.reOrderLevel = reOrderLevel;
     }
 
+    public Boolean isOutOfStock() {
+        return outOfStock;
+    }
+
+    public void setOutOfStock(Boolean outOfStock) {
+        this.outOfStock = outOfStock;
+    }
+
     public Long getBarcodeId() {
         return barcodeId;
     }
@@ -243,6 +253,7 @@ public class ProductDTO implements Serializable {
             ", dateOfExpiry='" + getDateOfExpiry() + "'" +
             ", maximumStockLevel=" + getMaximumStockLevel() +
             ", reOrderLevel=" + getReOrderLevel() +
+            ", outOfStock='" + isOutOfStock() + "'" +
             ", barcode=" + getBarcodeId() +
             ", status=" + getStatusId() +
             ", taxCategory=" + getTaxCategoryId() +

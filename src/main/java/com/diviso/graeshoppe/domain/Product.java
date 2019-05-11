@@ -71,6 +71,9 @@ public class Product implements Serializable {
     @Column(name = "re_order_level")
     private Double reOrderLevel;
 
+    @Column(name = "out_of_stock")
+    private Boolean outOfStock;
+
     @OneToOne
     @JoinColumn(unique = true)
     private Barcode barcode;
@@ -281,6 +284,19 @@ public class Product implements Serializable {
 
     public void setReOrderLevel(Double reOrderLevel) {
         this.reOrderLevel = reOrderLevel;
+    }
+
+    public Boolean isOutOfStock() {
+        return outOfStock;
+    }
+
+    public Product outOfStock(Boolean outOfStock) {
+        this.outOfStock = outOfStock;
+        return this;
+    }
+
+    public void setOutOfStock(Boolean outOfStock) {
+        this.outOfStock = outOfStock;
     }
 
     public Barcode getBarcode() {
@@ -498,6 +514,7 @@ public class Product implements Serializable {
             ", dateOfExpiry='" + getDateOfExpiry() + "'" +
             ", maximumStockLevel=" + getMaximumStockLevel() +
             ", reOrderLevel=" + getReOrderLevel() +
+            ", outOfStock='" + isOutOfStock() + "'" +
             "}";
     }
 }

@@ -72,6 +72,10 @@
             <column name="re_order_level" type="double">
                 <constraints nullable="true" />
             </column>
+
+            <column name="out_of_stock" type="boolean">
+                <constraints nullable="true" />
+            </column>
             <column name="barcode_id" type="bigint">
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_product_barcode_id" />
             </column>

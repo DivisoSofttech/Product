@@ -58,6 +58,10 @@
         {
             "fieldName": "reOrderLevel",
             "fieldType": "Double"
+        },
+        {
+            "fieldName": "outOfStock",
+            "fieldType": "Boolean"
         }
     ],
     "relationships": [

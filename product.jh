@@ -10,7 +10,8 @@ entity Product{
 	dateOfMfd LocalDate,
 	dateOfExpiry LocalDate,
 	maximumStockLevel Double,
-	reOrderLevel Double
+	reOrderLevel Double,
+	outOfStock Boolean
 }
 entity Barcode{
 	code String required, //make unique
