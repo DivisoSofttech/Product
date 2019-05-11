@@ -62,6 +62,7 @@ public class StockDiaryServiceImpl implements StockDiaryService {
         stockDiary = stockDiaryRepository.save(stockDiary);
         StockDiaryDTO result = stockDiaryMapper.toDto(stockDiary);
         stockDiarySearchRepository.save(stockDiary);
+        stockDiarySearchRepository.save(stockDiary);
         return result;
     }
 

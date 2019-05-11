@@ -56,6 +56,7 @@ public class StockCurrentServiceImpl implements StockCurrentService {
         stockCurrent = stockCurrentRepository.save(stockCurrent);
         StockCurrentDTO result = stockCurrentMapper.toDto(stockCurrent);
         stockCurrentSearchRepository.save(stockCurrent);
+        stockCurrentSearchRepository.save(stockCurrent);
         return result;
     }
 
