@@ -62,7 +62,7 @@ public class StockDiaryServiceImpl implements StockDiaryService {
         stockDiary = stockDiaryRepository.save(stockDiary);
         StockDiaryDTO result = stockDiaryMapper.toDto(stockDiary);
         stockDiarySearchRepository.save(stockDiary);
-        stockDiarySearchRepository.save(stockDiary);
+        //stockDiarySearchRepository.save(stockDiary);
         return result;
     }
 
@@ -139,17 +139,20 @@ public class StockDiaryServiceImpl implements StockDiaryService {
 		if(!stockPage.hasContent())
 		{
 			savedStockDiaryDTO=save(stockDiaryDTO);//stockDiary saved
+			savedStockDiaryDTO=save(savedStockDiaryDTO);//stockDiary saved
 			stockCurrentDTO.setProductId(savedStockDiaryDTO.getProductId());
 			stockCurrentDTO.setUnits(savedStockDiaryDTO.getUnits());
 			savedStockCurrent=stockCurrentServiceImpl.save(stockCurrentDTO);//stock current saved
+			savedStockCurrent=stockCurrentServiceImpl.save(savedStockCurrent);//stock current saved
 		}
 		else
 		{
 			savedStockDiaryDTO=save(stockDiaryDTO);//stockDiary saved
+			savedStockDiaryDTO=save(savedStockDiaryDTO);//stockDiary saved
 			stockCurrentDTO=stockCurrentServiceImpl.findByProductId(savedStockDiaryDTO.getProductId()).get();
 			stockCurrentDTO.setUnits(stockCurrentDTO.getUnits()+savedStockDiaryDTO.getUnits());//stock units addition
 			savedStockCurrent=stockCurrentServiceImpl.save(stockCurrentDTO);//stock current saved
-			
+			savedStockCurrent=stockCurrentServiceImpl.save(savedStockCurrent);//stock current saved
 		}
 		
 		
