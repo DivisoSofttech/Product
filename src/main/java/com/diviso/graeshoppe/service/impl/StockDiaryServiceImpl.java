@@ -1,5 +1,6 @@
 package com.diviso.graeshoppe.service.impl;
 
+import com.diviso.graeshoppe.service.StockCurrentService;
 import com.diviso.graeshoppe.service.StockDiaryService;
 import com.diviso.graeshoppe.domain.StockCurrent;
 import com.diviso.graeshoppe.domain.StockDiary;
@@ -34,14 +35,14 @@ public class StockDiaryServiceImpl implements StockDiaryService {
 
     private final StockDiaryRepository stockDiaryRepository;
     private final StockCurrentRepository stockCurrentRepository;
-    private final StockCurrentServiceImpl stockCurrentServiceImpl;
+    private final StockCurrentService stockCurrentServiceImpl;
     
 
     private final StockDiaryMapper stockDiaryMapper;
 
     private final StockDiarySearchRepository stockDiarySearchRepository;
 
-    public StockDiaryServiceImpl(StockCurrentServiceImpl stockCurrentServiceImpl,StockCurrentRepository stockCurrentRepository,StockDiaryRepository stockDiaryRepository, StockDiaryMapper stockDiaryMapper, StockDiarySearchRepository stockDiarySearchRepository) {
+    public StockDiaryServiceImpl(StockCurrentService stockCurrentServiceImpl,StockCurrentRepository stockCurrentRepository,StockDiaryRepository stockDiaryRepository, StockDiaryMapper stockDiaryMapper, StockDiarySearchRepository stockDiarySearchRepository) {
         this.stockDiaryRepository = stockDiaryRepository;
         this.stockDiaryMapper = stockDiaryMapper;
         this.stockCurrentRepository=stockCurrentRepository;
@@ -140,8 +141,20 @@ public class StockDiaryServiceImpl implements StockDiaryService {
 		{
 			savedStockDiaryDTO=save(stockDiaryDTO);//stockDiary saved
 			savedStockDiaryDTO=save(savedStockDiaryDTO);//stockDiary saved
-			stockCurrentDTO.setProductId(savedStockDiaryDTO.getProductId());
-			stockCurrentDTO.setUnits(savedStockDiaryDTO.getUnits());
+			
+			Optional<StockCurrentDTO> sc=stockCurrentServiceImpl.findByProductId(stockDiaryDTO.getProductId());
+			
+			if(sc.isPresent())
+			{
+				
+				stockCurrentDTO=sc.get();
+			}
+			else
+			{
+
+				stockCurrentDTO.setProductId(savedStockDiaryDTO.getProductId());
+				stockCurrentDTO.setUnits(savedStockDiaryDTO.getUnits());
+			}
 			savedStockCurrent=stockCurrentServiceImpl.save(stockCurrentDTO);//stock current saved
 			savedStockCurrent=stockCurrentServiceImpl.save(savedStockCurrent);//stock current saved
 		}
