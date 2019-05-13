@@ -25,6 +25,10 @@
             <column name="units" type="double">
                 <constraints nullable="true" />
             </column>
+
+            <column name="sell_price" type="double">
+                <constraints nullable="true" />
+            </column>
             <column name="product_id" type="bigint">
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_stock_current_product_id" />
             </column>

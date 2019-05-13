@@ -11,6 +11,8 @@ public class StockCurrentDTO implements Serializable {
 
     private Double units;
 
+    private Double sellPrice;
+
 
     private Long productId;
 
@@ -28,6 +30,14 @@ public class StockCurrentDTO implements Serializable {
 
     public void setUnits(Double units) {
         this.units = units;
+    }
+
+    public Double getSellPrice() {
+        return sellPrice;
+    }
+
+    public void setSellPrice(Double sellPrice) {
+        this.sellPrice = sellPrice;
     }
 
     public Long getProductId() {
@@ -64,6 +74,7 @@ public class StockCurrentDTO implements Serializable {
         return "StockCurrentDTO{" +
             "id=" + getId() +
             ", units=" + getUnits() +
+            ", sellPrice=" + getSellPrice() +
             ", product=" + getProductId() +
             "}";
     }

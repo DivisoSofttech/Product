@@ -25,6 +25,9 @@ public class StockCurrent implements Serializable {
     @Column(name = "units")
     private Double units;
 
+    @Column(name = "sell_price")
+    private Double sellPrice;
+
     @OneToOne
     @JoinColumn(unique = true)
     private Product product;
@@ -49,6 +52,19 @@ public class StockCurrent implements Serializable {
 
     public void setUnits(Double units) {
         this.units = units;
+    }
+
+    public Double getSellPrice() {
+        return sellPrice;
+    }
+
+    public StockCurrent sellPrice(Double sellPrice) {
+        this.sellPrice = sellPrice;
+        return this;
+    }
+
+    public void setSellPrice(Double sellPrice) {
+        this.sellPrice = sellPrice;
     }
 
     public Product getProduct() {
@@ -90,6 +106,7 @@ public class StockCurrent implements Serializable {
         return "StockCurrent{" +
             "id=" + getId() +
             ", units=" + getUnits() +
+            ", sellPrice=" + getSellPrice() +
             "}";
     }
 }

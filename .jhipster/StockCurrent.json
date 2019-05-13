@@ -4,6 +4,10 @@
         {
             "fieldName": "units",
             "fieldType": "Double"
+        },
+        {
+            "fieldName": "sellPrice",
+            "fieldType": "Double"
         }
     ],
     "relationships": [

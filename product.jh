@@ -64,7 +64,8 @@ entity StockLine{
 }
 
 entity StockCurrent{
-units Double
+units Double,
+sellPrice Double
 }
 entity StockDiary{
 dateOfCreation LocalDate,
