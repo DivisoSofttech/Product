@@ -14,6 +14,8 @@ public class ProductDTO implements Serializable {
 
     private Long id;
 
+    private String userId;
+
     @NotNull
     private String reference;
 
@@ -62,6 +64,14 @@ public class ProductDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getReference() {
@@ -241,6 +251,7 @@ public class ProductDTO implements Serializable {
     public String toString() {
         return "ProductDTO{" +
             "id=" + getId() +
+            ", userId='" + getUserId() + "'" +
             ", reference='" + getReference() + "'" +
             ", searchkey='" + getSearchkey() + "'" +
             ", name='" + getName() + "'" +

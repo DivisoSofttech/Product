@@ -1,4 +1,5 @@
 entity Product{
+	userId String,
 	reference String required,//make unique
 	searchkey String required , //make unique
 	name String required,

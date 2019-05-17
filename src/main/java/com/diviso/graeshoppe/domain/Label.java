@@ -8,6 +8,7 @@ import javax.validation.constraints.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Label.
@@ -94,4 +95,5 @@ public class Label implements Serializable {
             ", description='" + getDescription() + "'" +
             "}";
     }
+
 }

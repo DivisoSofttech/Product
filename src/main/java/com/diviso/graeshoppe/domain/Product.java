@@ -28,6 +28,9 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_id")
+    private String userId;
+
     @NotNull
     @Column(name = "reference", nullable = false)
     private String reference;
@@ -74,15 +77,15 @@ public class Product implements Serializable {
     @Column(name = "out_of_stock")
     private Boolean outOfStock;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne
     @JoinColumn(unique = true)
     private Barcode barcode;
 
-    @OneToMany(mappedBy = "product",cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "product")
     private Set<Note> notes = new HashSet<>();
-    @OneToMany(mappedBy = "product",cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "product")
     private Set<StockDiary> stockDiaries = new HashSet<>();
-    @OneToMany(mappedBy = "product",cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "product")
     private Set<StockLine> stockLines = new HashSet<>();
     @ManyToMany
     @JoinTable(name = "product_labels",
@@ -96,7 +99,7 @@ public class Product implements Serializable {
                inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
     private Set<Category> categories = new HashSet<>();
 
-    @OneToOne(mappedBy = "product",cascade=CascadeType.ALL)
+    @OneToOne(mappedBy = "product")
     @JsonIgnore
     private StockCurrent stockCurrent;
 
@@ -115,6 +118,19 @@ public class Product implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public Product userId(String userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getReference() {
@@ -396,18 +412,6 @@ public class Product implements Serializable {
         return this;
     }
 
-//    public Product addLabels(Label label) {
-//        this.labels.add(label);
-//        label.getProducts().add(this);
-//        return this;
-//    }
-//
-//    public Product removeLabels(Label label) {
-//        this.labels.remove(label);
-//        label.getProducts().remove(this);
-//        return this;
-//    }
-
     public void setLabels(Set<Label> labels) {
         this.labels = labels;
     }
@@ -420,18 +424,6 @@ public class Product implements Serializable {
         this.categories = categories;
         return this;
     }
-
-//    public Product addCategory(Category category) {
-//        this.categories.add(category);
-//        category.getProducts().add(this);
-//        return this;
-//    }
-//
-//    public Product removeCategory(Category category) {
-//        this.categories.remove(category);
-//        category.getProducts().remove(this);
-//        return this;
-//    }
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
@@ -501,6 +493,7 @@ public class Product implements Serializable {
     public String toString() {
         return "Product{" +
             "id=" + getId() +
+            ", userId='" + getUserId() + "'" +
             ", reference='" + getReference() + "'" +
             ", searchkey='" + getSearchkey() + "'" +
             ", name='" + getName() + "'" +
