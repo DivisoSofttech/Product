@@ -2,9 +2,12 @@ package com.diviso.graeshoppe.service.impl;
 
 import com.diviso.graeshoppe.service.ProductService;
 import com.diviso.graeshoppe.domain.Product;
+import com.diviso.graeshoppe.domain.StockCurrent;
 import com.diviso.graeshoppe.repository.ProductRepository;
+import com.diviso.graeshoppe.repository.StockCurrentRepository;
 import com.diviso.graeshoppe.repository.search.ProductSearchRepository;
 import com.diviso.graeshoppe.service.dto.ProductDTO;
+import com.diviso.graeshoppe.service.dto.StockCurrentDTO;
 import com.diviso.graeshoppe.service.mapper.ProductMapper;
 
 import net.sf.jasperreports.engine.JRException;
@@ -48,6 +51,9 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper productMapper;
 
     private final ProductSearchRepository productSearchRepository;
+    
+    @Autowired
+    StockCurrentRepository stockCurrentRepository;
     
     @Autowired
 	DataSource dataSource;
@@ -119,8 +125,14 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Product : {}", id);        productRepository.deleteById(id);
+        log.debug("Request to delete Product : {}", id);      
+        productRepository.deleteById(id);
         productSearchRepository.deleteById(id);
+        Optional<StockCurrent> stockcurrent =stockCurrentRepository.findByProductId(id);
+        stockcurrent.ifPresent(stockcurrent1 -> {
+        	 stockCurrentRepository.delete(stockcurrent1);
+        });
+       
     }
 
     /**

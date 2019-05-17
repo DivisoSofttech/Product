@@ -6,6 +6,8 @@ import com.diviso.graeshoppe.web.rest.util.HeaderUtil;
 import com.diviso.graeshoppe.web.rest.util.PaginationUtil;
 
 import com.diviso.graeshoppe.service.dto.ProductDTO;
+import com.diviso.graeshoppe.service.dto.StockCurrentDTO;
+import com.diviso.graeshoppe.service.impl.StockCurrentServiceImpl;
 import com.diviso.graeshoppe.service.mapper.ProductMapper;
 
 import io.github.jhipster.web.util.ResponseUtil;
@@ -43,6 +45,9 @@ public class ProductResource {
     
     @Autowired
     private ProductMapper productMapper; 
+    
+    @Autowired
+    StockCurrentServiceImpl stockCurrentServiceImpl;
 
   
     private final ProductService productService;
@@ -139,6 +144,7 @@ public class ProductResource {
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         log.debug("REST request to delete Product : {}", id);
         productService.delete(id);
+            
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
