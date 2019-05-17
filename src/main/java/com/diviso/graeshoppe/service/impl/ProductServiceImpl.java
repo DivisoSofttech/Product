@@ -6,6 +6,7 @@ import com.diviso.graeshoppe.domain.StockCurrent;
 import com.diviso.graeshoppe.repository.ProductRepository;
 import com.diviso.graeshoppe.repository.StockCurrentRepository;
 import com.diviso.graeshoppe.repository.search.ProductSearchRepository;
+import com.diviso.graeshoppe.repository.search.StockCurrentSearchRepository;
 import com.diviso.graeshoppe.service.dto.ProductDTO;
 import com.diviso.graeshoppe.service.dto.StockCurrentDTO;
 import com.diviso.graeshoppe.service.mapper.ProductMapper;
@@ -51,6 +52,9 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper productMapper;
 
     private final ProductSearchRepository productSearchRepository;
+    
+    @Autowired
+    StockCurrentSearchRepository stockCurrentSearchRepository;
     
     @Autowired
     StockCurrentRepository stockCurrentRepository;
@@ -126,13 +130,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Product : {}", id);      
-        productRepository.deleteById(id);
-        productSearchRepository.deleteById(id);
+
         Optional<StockCurrent> stockcurrent =stockCurrentRepository.findByProductId(id);
         stockcurrent.ifPresent(stockcurrent1 -> {
         	 stockCurrentRepository.delete(stockcurrent1);
+        	 stockCurrentSearchRepository.delete(stockcurrent1);
         });
-       
+        productRepository.deleteById(id);
+        productSearchRepository.deleteById(id);
     }
 
     /**
