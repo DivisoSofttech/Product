@@ -84,13 +84,13 @@ public class Product implements Serializable {
     private Set<StockDiary> stockDiaries = new HashSet<>();
     @OneToMany(mappedBy = "product",cascade=CascadeType.ALL)
     private Set<StockLine> stockLines = new HashSet<>();
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "product_labels",
                joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "labels_id", referencedColumnName = "id"))
     private Set<Label> labels = new HashSet<>();
 
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "product_category",
                joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
