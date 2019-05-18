@@ -57,8 +57,8 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     StockCurrentRepository stockCurrentRepository;
 
-    @Autowired
-    SecurityUtils securityUtils;
+   
+    
     
     @Autowired
 	DataSource dataSource;
@@ -79,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO save(ProductDTO productDTO) {
         log.debug("Request to save Product : {}", productDTO);
         Product product = productMapper.toEntity(productDTO);
-        Optional<String> currentUserLogin = securityUtils.getCurrentUserLogin();
+        Optional<String> currentUserLogin = SecurityUtils.getCurrentUserLogin();
         product.setUserId(currentUserLogin.get());
         product = productRepository.save(product);
         ProductDTO result = productMapper.toDto(product);
