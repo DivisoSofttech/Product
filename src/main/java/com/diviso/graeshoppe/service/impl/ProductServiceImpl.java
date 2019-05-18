@@ -1,32 +1,6 @@
 package com.diviso.graeshoppe.service.impl;
 
-import com.diviso.graeshoppe.service.ProductService;
-import com.diviso.graeshoppe.domain.Product;
-import com.diviso.graeshoppe.domain.StockCurrent;
-import com.diviso.graeshoppe.repository.ProductRepository;
-import com.diviso.graeshoppe.repository.StockCurrentRepository;
-import com.diviso.graeshoppe.repository.search.ProductSearchRepository;
-import com.diviso.graeshoppe.repository.search.StockCurrentSearchRepository;
-import com.diviso.graeshoppe.service.dto.ProductDTO;
-import com.diviso.graeshoppe.service.dto.StockCurrentDTO;
-import com.diviso.graeshoppe.service.mapper.ProductMapper;
-
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -36,7 +10,31 @@ import java.util.Optional;
 
 import javax.sql.DataSource;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.diviso.graeshoppe.domain.Product;
+import com.diviso.graeshoppe.domain.StockCurrent;
+import com.diviso.graeshoppe.repository.ProductRepository;
+import com.diviso.graeshoppe.repository.StockCurrentRepository;
+import com.diviso.graeshoppe.repository.search.ProductSearchRepository;
+import com.diviso.graeshoppe.repository.search.StockCurrentSearchRepository;
+import com.diviso.graeshoppe.security.SecurityUtils;
+import com.diviso.graeshoppe.service.ProductService;
+import com.diviso.graeshoppe.service.dto.ProductDTO;
+import com.diviso.graeshoppe.service.mapper.ProductMapper;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 
 /**
  * Service Implementation for managing Product.
@@ -58,6 +56,9 @@ public class ProductServiceImpl implements ProductService {
     
     @Autowired
     StockCurrentRepository stockCurrentRepository;
+
+    @Autowired
+    SecurityUtils securityUtils;
     
     @Autowired
 	DataSource dataSource;
@@ -78,6 +79,8 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO save(ProductDTO productDTO) {
         log.debug("Request to save Product : {}", productDTO);
         Product product = productMapper.toEntity(productDTO);
+        Optional<String> currentUserLogin = securityUtils.getCurrentUserLogin();
+        product.setUserId(currentUserLogin.get());
         product = productRepository.save(product);
         ProductDTO result = productMapper.toDto(product);
         productSearchRepository.save(product);
