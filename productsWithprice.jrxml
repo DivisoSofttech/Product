@@ -14,21 +14,12 @@
 		</conditionalStyle>
 	</style>
 	<queryString language="SQL">
-		<![CDATA[SELECT  productmicroservice.product.reference, productmicroservice.product.name, productmicroservice.stock_line.buy_price 
-FROM  productmicroservice.product 
-INNER JOIN productmicroservice.stock_line ON  productmicroservice.product.id =  productmicroservice.stock_line.product_id]]>
+		<![CDATA[SELECT productmicroservice.product.name
+FROM productmicroservice.product]]>
 	</queryString>
-	<field name="reference" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="reference"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="product"/>
-	</field>
 	<field name="name" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="name"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="product"/>
-	</field>
-	<field name="buy_price" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.label" value="buy_price"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="stock_line"/>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -65,15 +56,6 @@ INNER JOIN productmicroservice.stock_line ON  productmicroservice.product.id =  
 	<columnHeader>
 		<band height="26" splitType="Stretch">
 			<staticText>
-				<reportElement style="Column header" x="0" y="-10" width="185" height="30" forecolor="#000000" uuid="5dc1c879-23c4-4cdb-a2e1-ea9ad2de4ed0">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="245809c3-4ddf-43cf-bbed-e255828316e5"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Tw Cen MT" size="14" isBold="true" isItalic="true"/>
-				</textElement>
-				<text><![CDATA[Reference]]></text>
-			</staticText>
-			<staticText>
 				<reportElement style="Column header" x="185" y="-10" width="185" height="30" forecolor="#000000" uuid="56592faf-c499-4398-b523-c63c8dc235eb">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5cf4306f-67ad-4fb7-a1e1-d419ab91ed3c"/>
 				</reportElement>
@@ -82,30 +64,12 @@ INNER JOIN productmicroservice.stock_line ON  productmicroservice.product.id =  
 				</textElement>
 				<text><![CDATA[Product Name]]></text>
 			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="370" y="-10" width="185" height="30" forecolor="#000000" uuid="c503152d-0070-400d-9c7a-be81fb9c4a91">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="225fa7c9-a6f3-416b-a504-14aebe116ee8"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Tw Cen MT" isBold="true" isItalic="true"/>
-				</textElement>
-				<text><![CDATA[Buy Price]]></text>
-			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="18" splitType="Stretch">
 			<frame>
 				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="18" uuid="b50221b5-8254-440b-8c6f-1f0b138c9259"/>
-				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" positionType="Float" x="0" y="0" width="185" height="18" uuid="4fc955f7-41b9-496c-b707-bb0e31f50df7">
-						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="245809c3-4ddf-43cf-bbed-e255828316e5"/>
-					</reportElement>
-					<textElement>
-						<font size="14"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{reference}]]></textFieldExpression>
-				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" positionType="Float" x="185" y="0" width="185" height="18" uuid="35250b89-79dd-46be-9991-20f3f3160c2a">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5cf4306f-67ad-4fb7-a1e1-d419ab91ed3c"/>
@@ -114,15 +78,6 @@ INNER JOIN productmicroservice.stock_line ON  productmicroservice.product.id =  
 						<font size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" positionType="Float" x="370" y="0" width="185" height="18" uuid="9e1da8e0-4409-4964-a5be-9201db9a3286">
-						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="225fa7c9-a6f3-416b-a504-14aebe116ee8"/>
-					</reportElement>
-					<textElement>
-						<font size="14"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{buy_price}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>

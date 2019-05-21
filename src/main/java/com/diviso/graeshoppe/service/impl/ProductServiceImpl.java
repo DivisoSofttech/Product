@@ -3,6 +3,8 @@ package com.diviso.graeshoppe.service.impl;
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
+
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,13 +57,14 @@ public class ProductServiceImpl implements ProductService {
     StockCurrentSearchRepository stockCurrentSearchRepository;
     
     @Autowired
-    StockCurrentRepository stockCurrentRepository;
-
-   
-    
+    StockCurrentRepository stockCurrentRepository;  
     
     @Autowired
 	DataSource dataSource;
+   
+	/*
+	 * @Autowired Connection connection;
+	 */
 
     public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper, ProductSearchRepository productSearchRepository) {
         this.productRepository = productRepository;
@@ -175,20 +178,31 @@ public class ProductServiceImpl implements ProductService {
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("product", jr);
 						
-			Connection conn = null;
+			Connection conn=null;
+			
 			try {
 				conn = dataSource.getConnection();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			JasperPrint jp = JasperFillManager.fillReport(jr, parameters, conn);
+				
+				//System.out.println(conn.getClientInfo()+"-----------------------"+conn.getMetaData().getURL()+"_________________________________");
+							 			
+			   } catch (SQLException e) {				
+				  e.printStackTrace();
 			
-			//JasperExportManager.exportReportToPdfFile(jp, "UserNeeds.pdf");
+			   }
+			JasperPrint jp=JasperFillManager.fillReport(jr, parameters, conn);
 			
 			return JasperExportManager.exportReportToPdf(jp);
 			
 			
-	        } 	  
+	        } 	 
+    
+        }
+
+    
+    
+
+    
+    
+    
 	 
-}
+
