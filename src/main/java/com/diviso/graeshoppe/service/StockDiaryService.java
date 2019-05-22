@@ -57,4 +57,7 @@ public interface StockDiaryService {
     Page<StockDiaryDTO> findByProductId(Long id, Pageable pageable);
 
 	StockDiaryDTO createStockOfProduct(StockDiaryDTO stockDiaryDTO);
+
+	StockDiaryDTO updateStockDiary(StockDiaryDTO stockDiaryDTO);
+
 }

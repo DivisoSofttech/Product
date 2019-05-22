@@ -10,15 +10,21 @@ import com.diviso.graeshoppe.repository.search.StockDiarySearchRepository;
 import com.diviso.graeshoppe.service.dto.StockCurrentDTO;
 import com.diviso.graeshoppe.service.dto.StockDiaryDTO;
 import com.diviso.graeshoppe.service.mapper.StockDiaryMapper;
+import com.diviso.graeshoppe.web.rest.errors.BadRequestAlertException;
+import com.diviso.graeshoppe.web.rest.util.HeaderUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -130,6 +136,17 @@ public class StockDiaryServiceImpl implements StockDiaryService {
 	}
 
 	@Override
+    public StockDiaryDTO updateStockDiary(StockDiaryDTO stockDiaryDTO){
+        log.debug("REST request to update StockDiary : {}", stockDiaryDTO);
+        if (stockDiaryDTO.getId() == null) {
+        	System.out.println("<<<<<<<<<<<<<<<EXCEPTION>>>>>>>>>>>>>>>>>>>>>>>>");
+        }
+        System.out.println("<<<<<<<<<<<<<<<update stock diary>>>>>>>>>>>>>>>>>>>>>>>>");
+        return save(stockDiaryDTO);
+    }
+	
+	
+	@Override
 	public StockDiaryDTO createStockOfProduct(StockDiaryDTO stockDiaryDTO) {
 		
 		Pageable pageable=null;
@@ -140,7 +157,7 @@ public class StockDiaryServiceImpl implements StockDiaryService {
 		if(!stockPage.hasContent())
 		{
 			savedStockDiaryDTO=save(stockDiaryDTO);//stockDiary saved
-			savedStockDiaryDTO=save(savedStockDiaryDTO);//stockDiary saved
+			savedStockDiaryDTO=updateStockDiary(stockDiaryDTO);
 			
 			Optional<StockCurrentDTO> sc=stockCurrentServiceImpl.findByProductId(stockDiaryDTO.getProductId());
 			
