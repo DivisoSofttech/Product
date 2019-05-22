@@ -62,4 +62,5 @@ public interface StockCurrentService {
     Page<StockCurrentDTO> search(String query, Pageable pageable);
 
 	Optional<StockCurrentDTO> findByProductId(Long id);
+	 StockCurrentDTO updateStockCurrent(StockCurrentDTO stockCurrentDTO);
 }

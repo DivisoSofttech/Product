@@ -6,14 +6,20 @@ import com.diviso.graeshoppe.repository.StockCurrentRepository;
 import com.diviso.graeshoppe.repository.search.StockCurrentSearchRepository;
 import com.diviso.graeshoppe.service.dto.StockCurrentDTO;
 import com.diviso.graeshoppe.service.mapper.StockCurrentMapper;
+import com.diviso.graeshoppe.web.rest.errors.BadRequestAlertException;
+import com.diviso.graeshoppe.web.rest.util.HeaderUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -50,7 +56,7 @@ public class StockCurrentServiceImpl implements StockCurrentService {
      * @return the persisted entity
      */
     @Override
-    public StockCurrentDTO save(StockCurrentDTO stockCurrentDTO) {
+    public StockCurrentDTO save(StockCurrentDTO stockCurrentDTO){
         log.debug("Request to save StockCurrent : {}", stockCurrentDTO);
         StockCurrent stockCurrent = stockCurrentMapper.toEntity(stockCurrentDTO);
         stockCurrent = stockCurrentRepository.save(stockCurrent);
@@ -138,4 +144,25 @@ public class StockCurrentServiceImpl implements StockCurrentService {
 		return stockCurrentRepository.findByProductId(id)
 	            .map(stockCurrentMapper::toDto);
 	}
+	
+	@Override
+	 public  StockCurrentDTO updateStockCurrent( StockCurrentDTO stockCurrentDTO)  {
+	        log.debug("REST request to update StockCurrent : {}", stockCurrentDTO);
+	        if (stockCurrentDTO.getId() == null) {
+	        	
+	        	System.out.println("<<<<<<<<<<<<<<<EXCEPTION>>>>>>>>>>>>>>>>>>>>>>>>");
+	            //throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+	        }
+	    	System.out.println("<<<<<<<<<<<<<<<update stock current>>>>>>>>>>>>>>>>>>>>>>>>");
+	        
+	        return save(stockCurrentDTO);
+		/*
+		 * return ResponseEntity.ok()
+		 * .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME,
+		 * stockCurrentDTO.getId().toString())) .body(result);
+		 */
+	    }
+	
+	
+	
 }
