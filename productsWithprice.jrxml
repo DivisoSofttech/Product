@@ -31,7 +31,7 @@ FROM productmicroservice.product]]>
 				<staticText>
 					<reportElement style="Title" x="10" y="0" width="400" height="80" uuid="a2a2cac8-5a7d-4487-8c54-dab235ce4e21"/>
 					<textElement>
-						<font isBold="false"/>
+						<font fontName="DialogInput" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Products]]></text>
 				</staticText>
@@ -39,8 +39,10 @@ FROM productmicroservice.product]]>
 			<frame>
 				<reportElement mode="Opaque" x="0" y="100" width="451" height="32" forecolor="#000000" backcolor="#CC0000" uuid="e3c14156-5b51-4201-918b-97fdc012e5d4"/>
 				<textField>
-					<reportElement x="300" y="0" width="151" height="30" forecolor="#FFFFFF" uuid="ed1c477f-d89c-4d60-b761-6fddbe6b3e25"/>
-					<textElement verticalAlignment="Middle"/>
+					<reportElement x="280" y="1" width="171" height="30" forecolor="#FFFFFF" uuid="ed1c477f-d89c-4d60-b761-6fddbe6b3e25"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="DialogInput" isBold="true"/>
+					</textElement>
 					<textFieldExpression><![CDATA[new SimpleDateFormat("E dd MMMM y h:m:ss a").format(new Date())]]></textFieldExpression>
 				</textField>
 			</frame>
@@ -60,7 +62,7 @@ FROM productmicroservice.product]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5cf4306f-67ad-4fb7-a1e1-d419ab91ed3c"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Tw Cen MT" isBold="true" isItalic="true"/>
+					<font fontName="DialogInput" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Product Name]]></text>
 			</staticText>
@@ -71,11 +73,11 @@ FROM productmicroservice.product]]>
 			<frame>
 				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="18" uuid="b50221b5-8254-440b-8c6f-1f0b138c9259"/>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" positionType="Float" x="185" y="0" width="185" height="18" uuid="35250b89-79dd-46be-9991-20f3f3160c2a">
+					<reportElement style="Detail" positionType="Float" x="160" y="-6" width="210" height="24" uuid="35250b89-79dd-46be-9991-20f3f3160c2a">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5cf4306f-67ad-4fb7-a1e1-d419ab91ed3c"/>
 					</reportElement>
 					<textElement>
-						<font size="14"/>
+						<font fontName="DialogInput" size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 				</textField>
@@ -95,25 +97,25 @@ FROM productmicroservice.product]]>
 	<pageFooter>
 		<band height="25" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="1" width="555" height="24" forecolor="#D0B48E" backcolor="#000000" uuid="729c3539-f946-4d0e-a0a7-bda2815ea1b0"/>
+				<reportElement mode="Opaque" x="0" y="2" width="555" height="23" forecolor="#D0B48E" backcolor="#000000" uuid="729c3539-f946-4d0e-a0a7-bda2815ea1b0"/>
 				<textField evaluationTime="Report">
-					<reportElement style="Column header" x="513" y="0" width="40" height="20" forecolor="#FFFFFF" uuid="4834e99c-7f6c-485a-b098-50e5187f2ab4"/>
+					<reportElement style="Column header" x="490" y="0" width="63" height="20" forecolor="#FFFFFF" uuid="4834e99c-7f6c-485a-b098-50e5187f2ab4"/>
 					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="false"/>
+						<font fontName="DialogInput" size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Column header" x="433" y="0" width="80" height="20" forecolor="#FFFFFF" uuid="9825b46e-76f1-469a-abb8-a1cc27aad685"/>
+					<reportElement style="Column header" x="420" y="0" width="70" height="20" forecolor="#FFFFFF" uuid="9825b46e-76f1-469a-abb8-a1cc27aad685"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font size="10" isBold="false"/>
+						<font fontName="DialogInput" size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement style="Column header" x="10" y="1" width="189" height="20" forecolor="#FFFFFF" uuid="137d38c7-1a83-4fc5-b156-9d5f1b1a0ddc"/>
 					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="false"/>
+						<font fontName="DialogInput" size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 				</textField>
