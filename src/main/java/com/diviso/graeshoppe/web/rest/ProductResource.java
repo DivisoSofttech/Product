@@ -174,14 +174,14 @@ public class ProductResource {
     
     
     /**
-     * GET  /pdf/ProdutsReport : get the pdf of all the products.
+     * GET  /pdf/products-report : get the pdf of all the products.
      *  
      * @return the byte[]
      * @return the ResponseEntity with status 200 (OK) and the pdf of products in body
      */
     
-	 @GetMapping("/pdf/produtsReport") 
-	 public ResponseEntity<byte[]>  getPdfAllProdutsWithPrice() {
+	 @GetMapping("/pdf/products-report") 
+	 public ResponseEntity<byte[]>  getProductsPriceAsPdf() {
 	 
 	  log.debug("REST request to get a pdf of products");
 	 
@@ -189,13 +189,13 @@ public class ProductResource {
 	 
 	  try
       {
-		pdfContents=productService.getPdfAllProdutsWithPrice();
+		pdfContents=productService.getProductsPriceAsPdf();
       }catch (JRException e) {
            e.printStackTrace();
        }
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
-        String fileName ="productsReport.pdf";
+        String fileName ="stock.pdf";
 		headers.add("content-disposition", "attachment; filename=" + fileName);
 		ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(
 		            pdfContents, headers, HttpStatus.OK);	        

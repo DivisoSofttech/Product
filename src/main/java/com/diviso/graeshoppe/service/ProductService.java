@@ -63,11 +63,11 @@ public interface ProductService {
     Page<ProductDTO> search(String query, Pageable pageable);
     
     /**
-     * Get produtsReport.
+     * Get productsReport.
      *			     
      * @return the byte[]
 	 * @throws JRException 
      */
     
-    byte[] getPdfAllProdutsWithPrice() throws JRException;
+    byte[] getProductsPriceAsPdf() throws JRException;
 }

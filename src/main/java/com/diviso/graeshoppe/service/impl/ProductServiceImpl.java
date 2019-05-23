@@ -162,17 +162,17 @@ public class ProductServiceImpl implements ProductService {
     }
     
     /**
-     * Get produtsReport.
+     * Get productsReport.
      *			     
      * @return the byte[]
 	 * @throws JRException 
      */
     @Override   
-    public byte[] getPdfAllProdutsWithPrice() throws JRException {
+    public byte[] getProductsPriceAsPdf() throws JRException {
     	
     	   log.debug("Request to pdf of all products");
 		
-		   JasperReport jr = JasperCompileManager.compileReport("productsWithprice.jrxml");
+		   JasperReport jr = JasperCompileManager.compileReport("currentStock.jrxml");
 			
 	       //Preparing parameters
 			Map<String, Object> parameters = new HashMap<String, Object>();
