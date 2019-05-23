@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="currentStock" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="13acf49e-4913-4d1b-bccc-113817ad15d1">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stock" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="13acf49e-4913-4d1b-bccc-113817ad15d1">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (15)"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (16)"/>
 	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false"/>
 	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false"/>
 	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true"/>
@@ -40,98 +40,21 @@ FROM productmicroservice.product
 		<property name="com.jaspersoft.studio.field.label" value="units"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="stock_current"/>
 	</field>
-	<group name="Group1">
-		<groupExpression><![CDATA[$F{name}]]></groupExpression>
-		<groupHeader>
-			<band height="31">
-				<frame>
-					<reportElement mode="Opaque" x="0" y="7" width="555" height="24" forecolor="#B89F7D" backcolor="#000000" uuid="0a5fc4ac-2e39-4b7a-8f96-59f8eb2df66d"/>
-					<textField isStretchWithOverflow="true">
-						<reportElement style="SubTitle" isPrintRepeatedValues="false" x="10" y="-1" width="160" height="24" forecolor="#FFFFFF" uuid="4fbebfd3-a184-45af-b7d9-5c3faaf087b5"/>
-						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="14" isBold="false"/>
-						</textElement>
-						<textFieldExpression><![CDATA["ProductsName"]]></textFieldExpression>
-					</textField>
-					<textField>
-						<reportElement x="379" y="0" width="100" height="23" forecolor="#FFFFFF" uuid="11634182-a53a-4150-99ec-64fbc7f5c9dc"/>
-						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font size="14"/>
-						</textElement>
-						<textFieldExpression><![CDATA["Units"]]></textFieldExpression>
-					</textField>
-					<textField>
-						<reportElement x="279" y="0" width="100" height="23" forecolor="#FFFFFF" uuid="0e6f61cf-1168-4e42-8f5a-ec089ca7b5a7"/>
-						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font size="14"/>
-						</textElement>
-						<textFieldExpression><![CDATA["Sell-Price"]]></textFieldExpression>
-					</textField>
-					<textField>
-						<reportElement x="180" y="0" width="99" height="23" forecolor="#FFFFFF" uuid="db205939-4c47-4c74-ad19-b5fbe037daea"/>
-						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font size="14"/>
-						</textElement>
-						<textFieldExpression><![CDATA["Buy-Price"]]></textFieldExpression>
-					</textField>
-					<textField>
-						<reportElement x="180" y="33" width="99" height="21" uuid="c8b280e5-d279-485d-89db-b3a87582b673"/>
-						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="14"/>
-						</textElement>
-						<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
-					</textField>
-					<textField>
-						<reportElement positionType="Float" x="-1" y="32" width="181" height="22" forecolor="#000000" uuid="539b4cf8-ac6d-4bf8-ae91-63f3d4149f2d"/>
-						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="14" isBold="false"/>
-						</textElement>
-						<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
-					</textField>
-					<textField>
-						<reportElement x="280" y="32" width="100" height="22" uuid="0efa5e69-2b0d-48cf-a2fb-a382b2ac8d31"/>
-						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="14"/>
-						</textElement>
-						<textFieldExpression><![CDATA[$F{sell_price}]]></textFieldExpression>
-					</textField>
-					<textField>
-						<reportElement x="380" y="32" width="100" height="22" uuid="cfc0b202-5cb4-4375-95c0-c3d2bafe2e18"/>
-						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="14"/>
-						</textElement>
-						<textFieldExpression><![CDATA[$F{units}]]></textFieldExpression>
-					</textField>
-				</frame>
-			</band>
-		</groupHeader>
-		<groupFooter>
-			<band/>
-		</groupFooter>
-	</group>
-	<group name="Group2">
-		<groupExpression><![CDATA[$F{price}]]></groupExpression>
-		<groupHeader>
-			<band height="30"/>
-		</groupHeader>
-	</group>
-	<group name="sell_price">
-		<groupExpression><![CDATA[$F{sell_price}]]></groupExpression>
-	</group>
-	<group name="units">
-		<groupExpression><![CDATA[$F{units}]]></groupExpression>
-	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="132" splitType="Stretch">
+			<image>
+				<reportElement x="451" y="10" width="119" height="122" uuid="97705585-a0b5-4ec7-86f3-ae10c220e6af"/>
+				<imageExpression><![CDATA["GraeshoppeLogo.png"]]></imageExpression>
+			</image>
 			<frame>
 				<reportElement mode="Opaque" x="0" y="0" width="451" height="95" backcolor="#000000" uuid="6c6ca4e1-17cd-4913-93d6-5e670ea9ae8a"/>
 				<staticText>
 					<reportElement style="Title" x="0" y="0" width="370" height="66" uuid="a2a2cac8-5a7d-4487-8c54-dab235ce4e21"/>
 					<textElement>
-						<font fontName="SansSerif" isBold="false"/>
+						<font fontName="SansSerif" size="50" isBold="true" isItalic="false"/>
 					</textElement>
 					<text><![CDATA[Stock]]></text>
 				</staticText>
@@ -139,29 +62,98 @@ FROM productmicroservice.product
 			<frame>
 				<reportElement mode="Opaque" x="0" y="100" width="451" height="32" forecolor="#000000" backcolor="#CC0000" uuid="e3c14156-5b51-4201-918b-97fdc012e5d4"/>
 				<textField pattern="EEEEE dd MMMMM yyyy">
-					<reportElement x="290" y="6" width="144" height="20" forecolor="#FFFFFF" uuid="5c3301e7-a737-4c59-8a2f-a6c79fd1adb8"/>
+					<reportElement x="300" y="6" width="144" height="20" forecolor="#FFFFFF" uuid="5c3301e7-a737-4c59-8a2f-a6c79fd1adb8"/>
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[new SimpleDateFormat("E dd MMMM y h:m:ss a").format(new Date())]]></textFieldExpression>
 				</textField>
 			</frame>
-			<image>
-				<reportElement x="451" y="20" width="119" height="112" uuid="e847a92e-2765-4763-b579-9aab8e2b8b10"/>
-				<imageExpression><![CDATA["GraeshoppeLogo.png"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<pageHeader>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="17" splitType="Stretch"/>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="0" y="7" width="138" height="18" forecolor="#000000" uuid="ccbf89f4-7a8a-4648-954b-4639fd20658e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="710625b3-f306-4b30-afd1-8c7cc40d7ed5"/>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[product_name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="138" y="7" width="138" height="18" forecolor="#000000" uuid="a0f4c459-d40a-49f4-97ad-654e3ae47d89">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="486353b1-3dab-4126-950d-081c0b7788d7"/>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[buy_price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="276" y="7" width="138" height="18" forecolor="#000000" uuid="6fc981e6-7193-4db7-b84d-f42730c8d350">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="75c382e4-53e1-4eff-8f33-648fae5d88cb"/>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[sell_price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="414" y="7" width="138" height="18" forecolor="#000000" uuid="e9ecbd8e-9376-4948-9d49-8833a7a0c932">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9c3fa8d2-3d20-4fc1-8322-ab4020de468c"/>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[units]]></text>
+			</staticText>
+		</band>
 	</columnHeader>
 	<detail>
 		<band height="18" splitType="Stretch">
 			<frame>
 				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="18" uuid="b50221b5-8254-440b-8c6f-1f0b138c9259"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="0" y="0" width="138" height="18" uuid="90a742b2-6634-4c29-9da4-9a96b7f4d277">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="710625b3-f306-4b30-afd1-8c7cc40d7ed5"/>
+					</reportElement>
+					<textElement>
+						<font fontName="SansSerif" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="138" y="0" width="138" height="18" uuid="b098e227-9931-4abb-a352-b97ac5461ea6">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="486353b1-3dab-4126-950d-081c0b7788d7"/>
+					</reportElement>
+					<textElement>
+						<font fontName="SansSerif" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="276" y="0" width="138" height="18" uuid="187d8e16-1bdd-42db-a6c2-5429170eaeb9">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="75c382e4-53e1-4eff-8f33-648fae5d88cb"/>
+					</reportElement>
+					<textElement>
+						<font fontName="SansSerif" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{sell_price}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="414" y="0" width="138" height="18" uuid="db05070a-976f-40dc-b936-619fa6840d17">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9c3fa8d2-3d20-4fc1-8322-ab4020de468c"/>
+					</reportElement>
+					<textElement>
+						<font fontName="SansSerif" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{units}]]></textFieldExpression>
+				</textField>
 			</frame>
 		</band>
 	</detail>

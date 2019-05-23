@@ -172,7 +172,7 @@ public class ProductServiceImpl implements ProductService {
     	
     	   log.debug("Request to pdf of all products");
 		
-		   JasperReport jr = JasperCompileManager.compileReport("currentStock.jrxml");
+		   JasperReport jr = JasperCompileManager.compileReport("stock.jrxml");
 			
 	       //Preparing parameters
 			Map<String, Object> parameters = new HashMap<String, Object>();
