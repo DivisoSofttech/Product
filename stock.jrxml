@@ -62,7 +62,7 @@ FROM productmicroservice.product
 			<frame>
 				<reportElement mode="Opaque" x="0" y="100" width="451" height="32" forecolor="#000000" backcolor="#CC0000" uuid="e3c14156-5b51-4201-918b-97fdc012e5d4"/>
 				<textField pattern="EEEEE dd MMMMM yyyy">
-					<reportElement x="300" y="6" width="144" height="20" forecolor="#FFFFFF" uuid="5c3301e7-a737-4c59-8a2f-a6c79fd1adb8"/>
+					<reportElement x="280" y="6" width="144" height="20" forecolor="#FFFFFF" uuid="5c3301e7-a737-4c59-8a2f-a6c79fd1adb8"/>
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
@@ -77,7 +77,7 @@ FROM productmicroservice.product
 	<columnHeader>
 		<band height="26" splitType="Stretch">
 			<staticText>
-				<reportElement style="Column header" x="0" y="7" width="138" height="18" forecolor="#000000" uuid="ccbf89f4-7a8a-4648-954b-4639fd20658e">
+				<reportElement style="Column header" x="0" y="7" width="138" height="18" forecolor="#CC0000" uuid="ccbf89f4-7a8a-4648-954b-4639fd20658e">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="710625b3-f306-4b30-afd1-8c7cc40d7ed5"/>
 				</reportElement>
 				<textElement>
@@ -86,7 +86,7 @@ FROM productmicroservice.product
 				<text><![CDATA[product_name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="138" y="7" width="138" height="18" forecolor="#000000" uuid="a0f4c459-d40a-49f4-97ad-654e3ae47d89">
+				<reportElement style="Column header" x="138" y="7" width="138" height="18" forecolor="#CC0000" uuid="a0f4c459-d40a-49f4-97ad-654e3ae47d89">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="486353b1-3dab-4126-950d-081c0b7788d7"/>
 				</reportElement>
 				<textElement>
@@ -95,7 +95,7 @@ FROM productmicroservice.product
 				<text><![CDATA[buy_price]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="276" y="7" width="138" height="18" forecolor="#000000" uuid="6fc981e6-7193-4db7-b84d-f42730c8d350">
+				<reportElement style="Column header" x="276" y="7" width="138" height="18" forecolor="#CC0000" uuid="6fc981e6-7193-4db7-b84d-f42730c8d350">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="75c382e4-53e1-4eff-8f33-648fae5d88cb"/>
 				</reportElement>
 				<textElement>
@@ -104,7 +104,7 @@ FROM productmicroservice.product
 				<text><![CDATA[sell_price]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="414" y="7" width="138" height="18" forecolor="#000000" uuid="e9ecbd8e-9376-4948-9d49-8833a7a0c932">
+				<reportElement style="Column header" x="414" y="7" width="138" height="18" forecolor="#CC0000" uuid="e9ecbd8e-9376-4948-9d49-8833a7a0c932">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9c3fa8d2-3d20-4fc1-8322-ab4020de468c"/>
 				</reportElement>
 				<textElement>
@@ -122,8 +122,8 @@ FROM productmicroservice.product
 					<reportElement style="Detail" positionType="Float" x="0" y="0" width="138" height="18" uuid="90a742b2-6634-4c29-9da4-9a96b7f4d277">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="710625b3-f306-4b30-afd1-8c7cc40d7ed5"/>
 					</reportElement>
-					<textElement>
-						<font fontName="SansSerif" size="14"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 				</textField>
@@ -131,8 +131,8 @@ FROM productmicroservice.product
 					<reportElement style="Detail" positionType="Float" x="138" y="0" width="138" height="18" uuid="b098e227-9931-4abb-a352-b97ac5461ea6">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="486353b1-3dab-4126-950d-081c0b7788d7"/>
 					</reportElement>
-					<textElement>
-						<font fontName="SansSerif" size="14"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
 				</textField>
@@ -140,8 +140,8 @@ FROM productmicroservice.product
 					<reportElement style="Detail" positionType="Float" x="276" y="0" width="138" height="18" uuid="187d8e16-1bdd-42db-a6c2-5429170eaeb9">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="75c382e4-53e1-4eff-8f33-648fae5d88cb"/>
 					</reportElement>
-					<textElement>
-						<font fontName="SansSerif" size="14"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{sell_price}]]></textFieldExpression>
 				</textField>
@@ -149,8 +149,8 @@ FROM productmicroservice.product
 					<reportElement style="Detail" positionType="Float" x="414" y="0" width="138" height="18" uuid="db05070a-976f-40dc-b936-619fa6840d17">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9c3fa8d2-3d20-4fc1-8322-ab4020de468c"/>
 					</reportElement>
-					<textElement>
-						<font fontName="SansSerif" size="14"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{units}]]></textFieldExpression>
 				</textField>
