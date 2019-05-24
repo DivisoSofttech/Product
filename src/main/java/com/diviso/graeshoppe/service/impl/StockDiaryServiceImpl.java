@@ -151,12 +151,12 @@ public class StockDiaryServiceImpl implements StockDiaryService {
 		
 			
 		StockDiaryDTO savedStockDiaryDTO=save(stockDiaryDTO);//stockDiary saved
-		 savedStockDiaryDTO=updateStockDiary(stockDiaryDTO);
+		 savedStockDiaryDTO=updateStockDiary(savedStockDiaryDTO);
 	
 		StockCurrentDTO stockCurrentDTO=stockCurrentServiceImpl.findByProductId(savedStockDiaryDTO.getProductId()).get();
 		stockCurrentDTO.setUnits(stockCurrentDTO.getUnits()+savedStockDiaryDTO.getUnits());//stock units addition
 		StockCurrentDTO savedStockCurrent=stockCurrentServiceImpl.save(stockCurrentDTO);//stock current saved
-		savedStockCurrent=stockCurrentServiceImpl.updateStockCurrent(stockCurrentDTO);//stock current saved
+		savedStockCurrent=stockCurrentServiceImpl.updateStockCurrent(savedStockCurrent);//stock current saved
 		
 		return savedStockDiaryDTO;
 	}
