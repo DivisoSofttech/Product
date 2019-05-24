@@ -149,47 +149,14 @@ public class StockDiaryServiceImpl implements StockDiaryService {
 	@Override
 	public StockDiaryDTO createStockOfProduct(StockDiaryDTO stockDiaryDTO) {
 		
-		Pageable pageable=null;
-		Page<StockDiaryDTO> stockPage= findByProductId(stockDiaryDTO.getProductId(), pageable);
-		StockDiaryDTO savedStockDiaryDTO=null;
-		StockCurrentDTO stockCurrentDTO=new StockCurrentDTO();
-		StockCurrentDTO savedStockCurrent=null;
-		if(!stockPage.hasContent())
-		{
-			savedStockDiaryDTO=save(stockDiaryDTO);//stockDiary saved
-			savedStockDiaryDTO=updateStockDiary(stockDiaryDTO);
 			
-			Optional<StockCurrentDTO> sc=stockCurrentServiceImpl.findByProductId(stockDiaryDTO.getProductId());
-			
-			if(sc.isPresent())
-			{
-				
-				stockCurrentDTO=sc.get();
-			}
-			else
-			{
-
-				stockCurrentDTO.setProductId(savedStockDiaryDTO.getProductId());
-				stockCurrentDTO.setUnits(savedStockDiaryDTO.getUnits());
-			}
-			savedStockCurrent=stockCurrentServiceImpl.save(stockCurrentDTO);//stock current saved
-			
-			savedStockCurrent=	stockCurrentServiceImpl.updateStockCurrent(savedStockCurrent);
-			
-			//savedStockCurrent=stockCurrentServiceImpl.save(savedStockCurrent);//stock current saved
-		}
-		else
-		{
-			savedStockDiaryDTO=save(stockDiaryDTO);//stockDiary saved
-			savedStockDiaryDTO=save(savedStockDiaryDTO);//stockDiary saved
-			stockCurrentDTO=stockCurrentServiceImpl.findByProductId(savedStockDiaryDTO.getProductId()).get();
-			stockCurrentDTO.setUnits(stockCurrentDTO.getUnits()+savedStockDiaryDTO.getUnits());//stock units addition
-			savedStockCurrent=stockCurrentServiceImpl.save(stockCurrentDTO);//stock current saved
-			savedStockCurrent=stockCurrentServiceImpl.save(savedStockCurrent);//stock current saved
-		}
-		
-		
-		
+		StockDiaryDTO savedStockDiaryDTO=save(stockDiaryDTO);//stockDiary saved
+		 savedStockDiaryDTO=updateStockDiary(stockDiaryDTO);
+	
+		StockCurrentDTO stockCurrentDTO=stockCurrentServiceImpl.findByProductId(savedStockDiaryDTO.getProductId()).get();
+		stockCurrentDTO.setUnits(stockCurrentDTO.getUnits()+savedStockDiaryDTO.getUnits());//stock units addition
+		StockCurrentDTO savedStockCurrent=stockCurrentServiceImpl.save(stockCurrentDTO);//stock current saved
+		savedStockCurrent=stockCurrentServiceImpl.updateStockCurrent(stockCurrentDTO);//stock current saved
 		
 		return savedStockDiaryDTO;
 	}
