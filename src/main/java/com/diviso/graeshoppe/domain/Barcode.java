@@ -33,7 +33,7 @@ public class Barcode implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "barcode")
+    @OneToMany(mappedBy = "barcode",cascade=CascadeType.ALL)
     private Set<BarcodeType> barcodeTypes = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {

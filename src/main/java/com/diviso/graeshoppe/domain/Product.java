@@ -77,16 +77,19 @@ public class Product implements Serializable {
     @Column(name = "out_of_stock")
     private Boolean outOfStock;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(unique = true)
     private Barcode barcode;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product",cascade=CascadeType.ALL)
     private Set<Note> notes = new HashSet<>();
-    @OneToMany(mappedBy = "product")
+    
+    @OneToMany(mappedBy = "product",cascade=CascadeType.ALL)
     private Set<StockDiary> stockDiaries = new HashSet<>();
-    @OneToMany(mappedBy = "product")
+    
+    @OneToMany(mappedBy = "product",cascade=CascadeType.ALL)
     private Set<StockLine> stockLines = new HashSet<>();
+    
     @ManyToMany
     @JoinTable(name = "product_labels",
                joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
@@ -99,7 +102,7 @@ public class Product implements Serializable {
                inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
     private Set<Category> categories = new HashSet<>();
 
-    @OneToOne(mappedBy = "product")
+    @OneToOne(mappedBy = "product",cascade=CascadeType.ALL)
     @JsonIgnore
     private StockCurrent stockCurrent;
 

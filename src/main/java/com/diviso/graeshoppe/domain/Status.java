@@ -36,9 +36,10 @@ public class Status implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "status")
+    @OneToMany(mappedBy = "status",cascade=CascadeType.ALL)
     private Set<Product> products = new HashSet<>();
-    @OneToMany(mappedBy = "status")
+   
+    @OneToMany(mappedBy = "status",cascade=CascadeType.ALL)
     private Set<Stock> stocks = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
