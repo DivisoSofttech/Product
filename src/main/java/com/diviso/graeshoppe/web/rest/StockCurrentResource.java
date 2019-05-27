@@ -79,6 +79,7 @@ public class StockCurrentResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         StockCurrentDTO result = stockCurrentService.save(stockCurrentDTO);
+        result=stockCurrentService.save(result);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, stockCurrentDTO.getId().toString()))
             .body(result);
