@@ -20,13 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.diviso.graeshoppe.domain.Product;
 import com.diviso.graeshoppe.domain.StockCurrent;
-import com.diviso.graeshoppe.domain.StockDiary;
 import com.diviso.graeshoppe.repository.ProductRepository;
 import com.diviso.graeshoppe.repository.StockCurrentRepository;
-import com.diviso.graeshoppe.repository.StockDiaryRepository;
 import com.diviso.graeshoppe.repository.search.ProductSearchRepository;
 import com.diviso.graeshoppe.repository.search.StockCurrentSearchRepository;
-import com.diviso.graeshoppe.repository.search.StockDiarySearchRepository;
 import com.diviso.graeshoppe.security.SecurityUtils;
 import com.diviso.graeshoppe.service.ProductService;
 import com.diviso.graeshoppe.service.dto.ProductDTO;
@@ -59,15 +56,7 @@ public class ProductServiceImpl implements ProductService {
     
     @Autowired
     StockCurrentRepository stockCurrentRepository;  
-    
-    @Autowired
-    StockDiaryRepository stockDiaryRepository;
-    
-    @Autowired
-    StockDiarySearchRepository stockDiarySearchRepository;
-    
-    
-    
+  
     @Autowired
 	DataSource dataSource;
    
@@ -93,11 +82,6 @@ public class ProductServiceImpl implements ProductService {
         Product product = productMapper.toEntity(productDTO);
         Optional<String> currentUserLogin = SecurityUtils.getCurrentUserLogin();
         product.setUserId(currentUserLogin.get());
-        StockDiary stockdiary=new StockDiary();
-        stockdiary.setPrice(0.00);
-        stockdiary.setUnits(0.00);
-        stockDiaryRepository.save(stockdiary);
-        stockDiarySearchRepository.save(stockdiary);
         product = productRepository.save(product);
         ProductDTO result = productMapper.toDto(product);
         productSearchRepository.save(product);
