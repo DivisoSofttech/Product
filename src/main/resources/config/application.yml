@@ -127,7 +127,10 @@ spring:
             enabled: false
     thymeleaf:
         mode: HTML
-
+        
+spring.batch.initialize-schema: ALWAYS
+spring.batch.job.enabled: "false"
+spring.main.banner-mode: "off"
 # ===================================================================
 # OpenID Connect Settings. Default settings are for Keycloak in Docker.
 # Start Keycloak using `docker-compose -f src/main/docker/keycloak.yml up`.
