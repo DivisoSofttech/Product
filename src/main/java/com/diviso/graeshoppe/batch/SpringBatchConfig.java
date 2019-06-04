@@ -51,7 +51,7 @@ import com.diviso.graeshoppe.service.dto.ProductDetailDTO;
 public class SpringBatchConfig {
 
 	
-	@Value("classpath:Product*.csv")
+	@Value("classpath:*.csv")
 	Resource[] inputResources;
 	
     @Bean

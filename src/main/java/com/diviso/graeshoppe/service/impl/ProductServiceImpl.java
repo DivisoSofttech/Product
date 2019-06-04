@@ -27,6 +27,7 @@ import com.diviso.graeshoppe.repository.search.StockCurrentSearchRepository;
 import com.diviso.graeshoppe.security.SecurityUtils;
 import com.diviso.graeshoppe.service.ProductService;
 import com.diviso.graeshoppe.service.dto.ProductDTO;
+import com.diviso.graeshoppe.service.dto.StockCurrentDTO;
 import com.diviso.graeshoppe.service.mapper.ProductMapper;
 
 import net.sf.jasperreports.engine.JRException;
@@ -43,164 +44,166 @@ import net.sf.jasperreports.engine.JasperReport;
 @Transactional
 public class ProductServiceImpl implements ProductService {
 
-    private final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
+	private final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
 
-    private final ProductRepository productRepository;
+	private final ProductRepository productRepository;
 
-    private final ProductMapper productMapper;
+	private final ProductMapper productMapper;
 
-    private final ProductSearchRepository productSearchRepository;
-    
-    @Autowired
-    StockCurrentSearchRepository stockCurrentSearchRepository;
-    
-    @Autowired
-    StockCurrentRepository stockCurrentRepository;  
-  
-    @Autowired
+	private final ProductSearchRepository productSearchRepository;
+
+	@Autowired
+	StockCurrentSearchRepository stockCurrentSearchRepository;
+
+	@Autowired
+	StockCurrentRepository stockCurrentRepository;
+
+	@Autowired
 	DataSource dataSource;
-   
+
+	@Autowired
+	StockCurrentServiceImpl stockCurrentServiceImpl;
 	/*
 	 * @Autowired Connection connection;
 	 */
 
-    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper, ProductSearchRepository productSearchRepository) {
-        this.productRepository = productRepository;
-        this.productMapper = productMapper;
-        this.productSearchRepository = productSearchRepository;
-    }
+	public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper,
+			ProductSearchRepository productSearchRepository) {
+		this.productRepository = productRepository;
+		this.productMapper = productMapper;
+		this.productSearchRepository = productSearchRepository;
+	}
 
-    /**
-     * Save a product.
-     *
-     * @param productDTO the entity to save
-     * @return the persisted entity
-     */
-    @Override
-    public ProductDTO save(ProductDTO productDTO) {
-        log.debug("Request to save Product : {}", productDTO);
-        Product product = productMapper.toEntity(productDTO);
-        Optional<String> currentUserLogin = SecurityUtils.getCurrentUserLogin();
-        product.setUserId(currentUserLogin.get());
-        product = productRepository.save(product);
-        ProductDTO result = productMapper.toDto(product);
-        productSearchRepository.save(product);
-        return result;
-    }
-
-    /**
-     * Get all the products.
-     *
-     * @param pageable the pagination information
-     * @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public Page<ProductDTO> findAll(Pageable pageable) {
-        log.debug("Request to get all Products");
-        return productRepository.findAll(pageable)
-            .map(productMapper::toDto);
-    }
-
-    /**
-     * Get all the Product with eager load of many-to-many relationships.
-     *
-     * @return the list of entities
-     */
-    public Page<ProductDTO> findAllWithEagerRelationships(Pageable pageable) {
-        return productRepository.findAllWithEagerRelationships(pageable).map(productMapper::toDto);
-    }
-    
-
-    /**
-     * Get one product by id.
-     *
-     * @param id the id of the entity
-     * @return the entity
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<ProductDTO> findOne(Long id) {
-        log.debug("Request to get Product : {}", id);
-        return productRepository.findOneWithEagerRelationships(id)
-            .map(productMapper::toDto);
-    }
-
-    /**
-     * Delete the product by id.
-     *
-     * @param id the id of the entity
-     */
-    @Override
-    public void delete(Long id) {
-        log.debug("Request to delete Product : {}", id);      
-
-        Optional<StockCurrent> stockcurrent =stockCurrentRepository.findByProductId(id);
-        stockcurrent.ifPresent(stockcurrent1 -> {
-        	 stockCurrentRepository.delete(stockcurrent1);
-        	 stockCurrentSearchRepository.delete(stockcurrent1);
-        });
-        productRepository.deleteById(id);
-        productSearchRepository.deleteById(id);
-    }
-
-    /**
-     * Search for the product corresponding to the query.
-     *
-     * @param query the query of the search
-     * @param pageable the pagination information
-     * @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public Page<ProductDTO> search(String query, Pageable pageable) {
-        log.debug("Request to search for a page of Products for query {}", query);
-        return productSearchRepository.search(queryStringQuery(query), pageable)
-            .map(productMapper::toDto);
-    }
-    
-    /**
-     * Get productsReport.
-     *			     
-     * @return the byte[]
-	 * @throws JRException 
-     */
-    @Override   
-    public byte[] getProductsPriceAsPdf() throws JRException {
-    	
-    	   log.debug("Request to pdf of all products");
+	/**
+	 * Save a product.
+	 *
+	 * @param productDTO
+	 *            the entity to save
+	 * @return the persisted entity
+	 */
+	@Override
+	public ProductDTO save(ProductDTO productDTO) {
+		log.debug("Request to save Product : {}", productDTO);
+		Product product = productMapper.toEntity(productDTO);
+		Optional<String> currentUserLogin = SecurityUtils.getCurrentUserLogin();
+		product.setUserId(currentUserLogin.get());
 		
-		   JasperReport jr = JasperCompileManager.compileReport("stock.jrxml");
-			
-	       //Preparing parameters
-			Map<String, Object> parameters = new HashMap<String, Object>();
-			parameters.put("product", jr);
-						
-			Connection conn=null;
-			
-			try {
-				conn = dataSource.getConnection();
-				
-				//System.out.println(conn.getClientInfo()+"-----------------------"+conn.getMetaData().getURL()+"_________________________________");
-							 			
-			   } catch (SQLException e) {				
-				  e.printStackTrace();
-			
-			   }
-			JasperPrint jp=JasperFillManager.fillReport(jr, parameters, conn);
-			
-			return JasperExportManager.exportReportToPdf(jp);
-			
-			
-	        } 	 
-    
-        }
+		// .............stockcurrent not saving hack...............
+		StockCurrentDTO stockCurrentDTO = new StockCurrentDTO();
+		stockCurrentDTO.setUnits(0.0);
+		stockCurrentServiceImpl.save(stockCurrentDTO);
+		// .............stockcurrent not saving hack...............
 
-    
-    
+		product = productRepository.save(product);
+		ProductDTO result = productMapper.toDto(product);
+		productSearchRepository.save(product);
+		return result;
+	}
 
-    
-    
-    
-	 
+	/**
+	 * Get all the products.
+	 *
+	 * @param pageable
+	 *            the pagination information
+	 * @return the list of entities
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Page<ProductDTO> findAll(Pageable pageable) {
+		log.debug("Request to get all Products");
+		return productRepository.findAll(pageable).map(productMapper::toDto);
+	}
 
+	/**
+	 * Get all the Product with eager load of many-to-many relationships.
+	 *
+	 * @return the list of entities
+	 */
+	public Page<ProductDTO> findAllWithEagerRelationships(Pageable pageable) {
+		return productRepository.findAllWithEagerRelationships(pageable).map(productMapper::toDto);
+	}
+
+	/**
+	 * Get one product by id.
+	 *
+	 * @param id
+	 *            the id of the entity
+	 * @return the entity
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Optional<ProductDTO> findOne(Long id) {
+		log.debug("Request to get Product : {}", id);
+		return productRepository.findOneWithEagerRelationships(id).map(productMapper::toDto);
+	}
+
+	/**
+	 * Delete the product by id.
+	 *
+	 * @param id
+	 *            the id of the entity
+	 */
+	@Override
+	public void delete(Long id) {
+		log.debug("Request to delete Product : {}", id);
+
+		Optional<StockCurrent> stockcurrent = stockCurrentRepository.findByProductId(id);
+		stockcurrent.ifPresent(stockcurrent1 -> {
+			stockCurrentRepository.delete(stockcurrent1);
+			stockCurrentSearchRepository.delete(stockcurrent1);
+		});
+		productRepository.deleteById(id);
+		productSearchRepository.deleteById(id);
+	}
+
+	/**
+	 * Search for the product corresponding to the query.
+	 *
+	 * @param query
+	 *            the query of the search
+	 * @param pageable
+	 *            the pagination information
+	 * @return the list of entities
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Page<ProductDTO> search(String query, Pageable pageable) {
+		log.debug("Request to search for a page of Products for query {}", query);
+		return productSearchRepository.search(queryStringQuery(query), pageable).map(productMapper::toDto);
+	}
+
+	/**
+	 * Get productsReport.
+	 * 
+	 * @return the byte[]
+	 * @throws JRException
+	 */
+	@Override
+	public byte[] getProductsPriceAsPdf() throws JRException {
+
+		log.debug("Request to pdf of all products");
+
+		JasperReport jr = JasperCompileManager.compileReport("stock.jrxml");
+
+		// Preparing parameters
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("product", jr);
+
+		Connection conn = null;
+
+		try {
+			conn = dataSource.getConnection();
+
+			// System.out.println(conn.getClientInfo()+"-----------------------"+conn.getMetaData().getURL()+"_________________________________");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		JasperPrint jp = JasperFillManager.fillReport(jr, parameters, conn);
+
+		return JasperExportManager.exportReportToPdf(jp);
+
+	}
+
+}
