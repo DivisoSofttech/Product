@@ -92,6 +92,7 @@ public class ProductServiceImpl implements ProductService {
 		StockCurrentDTO stockCurrentDTO = new StockCurrentDTO();
 		stockCurrentDTO.setUnits(0.0);
 		stockCurrentServiceImpl.save(stockCurrentDTO);
+		log.debug("+++++++++++++++++++Request to get stockCurrentDTO : {}", stockCurrentDTO);
 		// .............stockcurrent not saving hack...............
 
 		product = productRepository.save(product);
