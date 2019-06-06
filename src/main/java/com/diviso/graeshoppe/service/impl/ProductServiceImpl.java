@@ -96,7 +96,7 @@ public class ProductServiceImpl implements ProductService {
 		 */
 		// .............stockcurrent not saving hack...............
 
-		product.getStockCurrent().getId();
+		//product.getStockCurrent().getId();
 		product = productRepository.save(product);
 		ProductDTO result = productMapper.toDto(product);
 			productSearchRepository.save(product);
