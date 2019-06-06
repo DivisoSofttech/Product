@@ -89,15 +89,17 @@ public class ProductServiceImpl implements ProductService {
 		product.setUserId(currentUserLogin.get());
 		
 		// .............stockcurrent not saving hack...............
-		StockCurrentDTO stockCurrentDTO = new StockCurrentDTO();
-		stockCurrentDTO.setUnits(0.0);
-		stockCurrentServiceImpl.save(stockCurrentDTO);
-		log.debug("+++++++++++++++++++Request to get stockCurrentDTO : {}", stockCurrentDTO);
+		/*
+		 * StockCurrentDTO stockCurrentDTO = new StockCurrentDTO();
+		 * stockCurrentDTO.setUnits(0.0); stockCurrentServiceImpl.save(stockCurrentDTO);
+		 * log.debug("Request to get stockCurrentDTO : {}", stockCurrentDTO);
+		 */
 		// .............stockcurrent not saving hack...............
 
+		product.getStockCurrent().getId();
 		product = productRepository.save(product);
 		ProductDTO result = productMapper.toDto(product);
-		productSearchRepository.save(product);
+			productSearchRepository.save(product);
 		return result;
 	}
 
