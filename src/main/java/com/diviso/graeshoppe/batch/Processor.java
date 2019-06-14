@@ -21,7 +21,6 @@ import java.util.Map;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
-import com.diviso.graeshoppe.domain.Product;
 import com.diviso.graeshoppe.service.dto.ProductDetailDTO;
 
 

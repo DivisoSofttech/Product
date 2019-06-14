@@ -50,8 +50,6 @@ public class DBWriter implements ItemWriter<ProductDetailDTO> {
 			
 			Product dto = new Product();
 			
-			dto.setId(p.getId());
-			
 			dto.setName(p.getName());
 			
 			dto.setSearchkey("");
