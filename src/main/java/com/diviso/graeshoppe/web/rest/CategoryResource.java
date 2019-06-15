@@ -145,7 +145,7 @@ public class CategoryResource {
     }
 
     @PostMapping("/category/listToDTO")
-    public List<CategoryDTO> ListToDTo(List<Category> categoryList){
+    public List<CategoryDTO> ListToDTo(@RequestBody List<Category> categoryList){
     	log.info("input Categories:>>>>>>>>>>>>>>>>>>>>>>>>:    "+categoryList);
     	
      	log.info("input CategoryDTO:>>>>>>>>>>>>>>>>>>>>>>>>:    "+categoryMapper.toDto(categoryList));
