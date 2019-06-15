@@ -6,6 +6,9 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Mapping;
+import org.springframework.data.elasticsearch.annotations.Setting;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -15,6 +18,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "category")
 @Document(indexName = "category")
+@Setting(settingPath = "settings/indexsettings.json")
+@Mapping(mappingPath = "mappings/categorymappings.json")
 public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -8,6 +8,9 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Mapping;
+import org.springframework.data.elasticsearch.annotations.Setting;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -16,10 +19,13 @@ import java.util.Objects;
 
 /**
  * A Product.
+ * 
  */
 @Entity
 @Table(name = "product")
 @Document(indexName = "product")
+@Setting(settingPath = "settings/indexsettings.json")
+@Mapping(mappingPath = "mappings/productmappings.json")
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;

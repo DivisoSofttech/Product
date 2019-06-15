@@ -1,0 +1,23 @@
+{"index":{
+  
+    "analysis": {
+      "analyzer": {
+        "index_analyzer": {
+          "tokenizer": "index_tokenizer"
+        }
+      },
+      "tokenizer": {
+        "index_tokenizer": {
+          "type": "edge_ngram",
+          "min_gram": 2,
+          "max_gram": 10,
+          "token_chars": [
+            "letter",
+            "digit"
+          ]
+        }
+      }
+    }
+  
+ }
+}
