@@ -46,6 +46,7 @@ public class DBWriter implements ItemWriter<ProductDetailDTO> {
 	public void write(List<? extends ProductDetailDTO> products) throws Exception {
 
 		System.out.println("Data Saved for Users:>>>>>>>>>>" + products);
+		
 		for (ProductDetailDTO p : products) {
 			
 			Product dto = new Product();
@@ -68,7 +69,7 @@ public class DBWriter implements ItemWriter<ProductDetailDTO> {
 
 			stockCurrentRepo.save(dto.getStockCurrent());
 
-			System.out.println(".............. saved stock: " + dto.getStockCurrent());
+			System.out.println(".............. saved stock: " + stockCurrentRepo.save(dto.getStockCurrent()));
 
 		}
 	}

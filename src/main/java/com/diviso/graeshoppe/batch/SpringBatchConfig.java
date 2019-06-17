@@ -50,6 +50,7 @@ import com.diviso.graeshoppe.service.dto.ProductDetailDTO;
 @EnableBatchProcessing
 public class SpringBatchConfig {
 
+	static int etlname=0;
 	
 	@Value("classpath:*.csv")
 	Resource[] inputResources;
@@ -70,7 +71,7 @@ public class SpringBatchConfig {
                 .build();
 
 
-        return jobBuilderFactory.get("ETL-Load")
+        return jobBuilderFactory.get("ETL-Load"+etlname++)
                 .incrementer(new RunIdIncrementer())
                 .start(step)
                 .build();

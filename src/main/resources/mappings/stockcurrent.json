@@ -1,0 +1,79 @@
+{
+	"stockcurrent": {
+		"properties": {
+			"id": {
+				"type": "long"
+			},
+			"product": {
+				"properties": {
+					"id": {
+						"type": "long"
+					},
+					"image": {
+						"type": "text",
+						"fields": {
+							"keyword": {
+								"type": "keyword",
+								"ignore_above": 256
+							}
+						}
+					},
+					"imageContentType": {
+						"type": "text",
+						"fields": {
+							"keyword": {
+								"type": "keyword",
+								"ignore_above": 256
+							}
+						}
+					},
+					"name": {
+						"type": "text",
+						"analyzer": "index_analyzer",
+						"search_analyzer": "simple",
+						"fields": {
+							"keyword": {
+								"type": "keyword",
+								"ignore_above": 256
+							}
+						}
+					},
+					"reference": {
+						"type": "text",
+						"fields": {
+							"keyword": {
+								"type": "keyword",
+								"ignore_above": 256
+							}
+						}
+					},
+					"searchkey": {
+						"type": "text",
+						"fields": {
+							"keyword": {
+								"type": "keyword",
+								"ignore_above": 256
+							}
+						}
+					},
+					"userId": {
+						"type": "text",
+						"fields": {
+							"keyword": {
+								"type": "keyword",
+								"ignore_above": 256
+							}
+						}
+					}
+				}
+			},
+			"sellPrice": {
+				"type": "float"
+			},
+			"units": {
+				"type": "float"
+			}
+		}
+	}
+}
+    
