@@ -27,13 +27,13 @@ import java.util.Collection;
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
 @EnableDiscoveryClient
 /*@EnableAutoConfiguration(exclude={BatchAutoConfiguration.class})*/
-public class ProductmicroserviceApp {
+public class ProductmicroserviceApp {   
 
     private static final Logger log = LoggerFactory.getLogger(ProductmicroserviceApp.class);
 
     private final Environment env;
 
-    public ProductmicroserviceApp(Environment env) {
+    public ProductmicroserviceApp(Environment env) { 
         this.env = env;
     }
 

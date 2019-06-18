@@ -50,7 +50,7 @@ public class DBWriter implements ItemWriter<ProductDetailDTO> {
 		for (ProductDetailDTO p : products) {
 			
 			Product dto = new Product();
-			dto.setId(i++);
+		//	dto.setId(i++);
 			dto.setName(p.getName());
 			
 			dto.setSearchkey("");
@@ -65,7 +65,7 @@ public class DBWriter implements ItemWriter<ProductDetailDTO> {
 
 			dto.setStockCurrent(new StockCurrent());
 			
-			dto.getStockCurrent().setId(i++);
+			//dto.getStockCurrent().setId(i++);
 			
 			dto.getStockCurrent().setSellPrice(p.getPrice());
 

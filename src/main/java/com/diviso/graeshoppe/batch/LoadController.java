@@ -20,7 +20,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.jfree.util.Log;
@@ -30,12 +32,28 @@ import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersInvalidException;
+import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
+import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.LineMapper;
+import org.springframework.batch.item.file.MultiResourceItemReader;
+import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
+import org.springframework.batch.item.file.mapping.DefaultLineMapper;
+import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,6 +62,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.diviso.graeshoppe.service.dto.ProductDetailDTO;
 
 /**
  * TODO Provide a detailed description here
@@ -56,37 +76,132 @@ public class LoadController {
 
 	@Autowired
 	JobLauncher jobLauncher;
-
+	
 	@Autowired
-	Job job;
+	JobBuilderFactory jobBuilderFactory;
+	
+	@Autowired
+	StepBuilderFactory stepBuilderFactory;
+	
+	@Autowired
+	ItemProcessor<ProductDetailDTO, ProductDetailDTO> itemProcessor;
+	
+	@Autowired
+	ItemWriter<ProductDetailDTO> itemWriter;
+
+	/*@Autowired
+	Job job;*/
 
 	@GetMapping("/load-product")
-	public BatchStatus load(/*@RequestPart("file") MultipartFile file*/) throws JobParametersInvalidException,
+	public BatchStatus load(@RequestPart("file") MultipartFile[] file) throws JobParametersInvalidException,
 			JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, IOException {
-		/*
-		// ....................file upload..................................
 		
-		byte[] bytes = file.getBytes();
-		Path path = Paths.get("src/main/resources/" + file.getOriginalFilename());
-		Files.write(path, bytes);*/
-		
-		
-		// ....................................................................................
 		Map<String, JobParameter> maps = new HashMap<>();
-		maps.put("time", new JobParameter(System.currentTimeMillis()));
-		JobParameters parameters = new JobParameters(maps);
 
-		JobExecution jobExecution = jobLauncher.run(job, parameters);
+		maps.put("time", new JobParameter(System.currentTimeMillis()));
+		
+		JobParameters parameters = new JobParameters(maps);
+		
+		ByteArrayResource[] resources=null;
+       
+		JobExecution jobExecution=null;
+		
+		for(int i=0;i<file.length;i++){
+			
+			 resources=new ByteArrayResource[file.length];
+			 
+			 resources[i]=new ByteArrayResource(file[i].getBytes());
+		
+			System.out.println("file resource   "+i+"  "+resources[i]);
+		
+		
+		Job job=createJob(jobBuilderFactory, stepBuilderFactory, multiResourceItemReader(resources), itemProcessor, itemWriter);
+		 jobExecution = jobLauncher.run(job, parameters);
 
 		System.out.println("JobExecution: " + jobExecution.getStatus());
 
 		System.out.println("Batch is Running..." + jobExecution.isRunning());
+		
+		}
 		while (jobExecution.isRunning()) {
 			System.out.println("...");
 		}
-
 		return jobExecution.getStatus();
 	}
+	
+	
+	
+	
+    
+    public Job createJob(JobBuilderFactory jobBuilderFactory,
+                   StepBuilderFactory stepBuilderFactory, 
+                   ItemReader<ProductDetailDTO> itemReader,
+                   ItemProcessor<ProductDetailDTO, ProductDetailDTO> itemProcessor,
+                   ItemWriter<ProductDetailDTO> itemWriter
+    ) {
+
+        Step step = stepBuilderFactory.get("ETL-file-load")
+                .<ProductDetailDTO, ProductDetailDTO>chunk(1000)
+                .reader(itemReader)
+                .processor(itemProcessor)
+                .writer(itemWriter)
+                .build();
+        
+
+
+        return jobBuilderFactory.get("ETL-Load")
+                .incrementer(new RunIdIncrementer())
+                .start(step)
+                .build();
+    }
+
+    
+         
+    
+    public MultiResourceItemReader<ProductDetailDTO> multiResourceItemReader(ByteArrayResource[] inputResources)
+    {
+        MultiResourceItemReader<ProductDetailDTO> resourceItemReader = new MultiResourceItemReader<ProductDetailDTO>();
+        resourceItemReader.setResources(inputResources);
+        resourceItemReader.setDelegate(itemReader());
+        return resourceItemReader;
+    }
+    
+    
+    
+    public FlatFileItemReader<ProductDetailDTO> itemReader() {
+
+        FlatFileItemReader<ProductDetailDTO> flatFileItemReader = new FlatFileItemReader<>();
+        
+        flatFileItemReader.setName("CSV-Reader");
+        flatFileItemReader.setLinesToSkip(1);
+        flatFileItemReader.setLineMapper(lineMapper());
+        
+        return flatFileItemReader;
+    }
+    
+    
+    public LineMapper<ProductDetailDTO> lineMapper() {
+
+    	
+        DefaultLineMapper<ProductDetailDTO> defaultLineMapper = new DefaultLineMapper<>();
+        DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
+
+        lineTokenizer.setDelimiter(",");
+        lineTokenizer.setStrict(false);
+      lineTokenizer.setNames(new String[]{"name", "price"});
+  
+        BeanWrapperFieldSetMapper<ProductDetailDTO> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
+        fieldSetMapper.setTargetType(ProductDetailDTO.class);
+       
+        defaultLineMapper.setLineTokenizer(lineTokenizer);
+        defaultLineMapper.setFieldSetMapper(fieldSetMapper);
+
+        return defaultLineMapper;
+    }
+	
+	
+	
+	
 
 	@PostMapping("/upload-file")
 	public void uploadFile(@RequestPart("file") MultipartFile file) throws IOException {
@@ -96,6 +211,6 @@ public class LoadController {
 		Files.write(path, bytes);
 	}
 	
-	
+	  
 	
 }
