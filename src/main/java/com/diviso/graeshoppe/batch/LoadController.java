@@ -92,7 +92,7 @@ public class LoadController {
 	/*@Autowired
 	Job job;*/
 
-	@GetMapping("/load-product")
+	@PostMapping("/load-product")
 	public BatchStatus load(@RequestPart("file") MultipartFile[] file) throws JobParametersInvalidException,
 			JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, IOException {
 		
