@@ -142,5 +142,6 @@ public class StockResource {
         HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/stocks");
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
-
+ 
+   
 }

@@ -50,6 +50,13 @@ public interface StockService {
      */
     void delete(Long id);
 
+	/**
+	 * @param query
+	 * @param pageable
+	 * @return
+	 */
+	Page<StockDTO> search(String query, Pageable pageable);
+
     /**
      * Search for the stock corresponding to the query.
      *
@@ -58,5 +65,5 @@ public interface StockService {
      * @param pageable the pagination information
      * @return the list of entities
      */
-    Page<StockDTO> search(String query, Pageable pageable);
+    
 }

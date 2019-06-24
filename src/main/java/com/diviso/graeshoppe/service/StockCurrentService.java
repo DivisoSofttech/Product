@@ -63,4 +63,5 @@ public interface StockCurrentService {
 
 	Optional<StockCurrentDTO> findByProductId(Long id);
 	 StockCurrentDTO updateStockCurrent(StockCurrentDTO stockCurrentDTO);
+
 }

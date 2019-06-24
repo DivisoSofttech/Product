@@ -18,6 +18,8 @@ package com.diviso.graeshoppe.batch;
 import java.util.List;
 
 import org.jfree.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +28,14 @@ import com.diviso.graeshoppe.domain.Product;
 import com.diviso.graeshoppe.domain.StockCurrent;
 import com.diviso.graeshoppe.repository.ProductRepository;
 import com.diviso.graeshoppe.repository.StockCurrentRepository;
+import com.diviso.graeshoppe.service.dto.ProductDTO;
 import com.diviso.graeshoppe.service.dto.ProductDetailDTO;
+import com.diviso.graeshoppe.service.dto.StockCurrentDTO;
+import com.diviso.graeshoppe.service.mapper.ProductMapper;
+import com.diviso.graeshoppe.service.mapper.StockCurrentMapper;
+import com.diviso.graeshoppe.web.rest.NoteResource;
+import com.diviso.graeshoppe.web.rest.ProductResource;
+import com.diviso.graeshoppe.web.rest.StockCurrentResource;
 
 /**
  * TODO Provide a detailed description here
@@ -36,42 +45,78 @@ import com.diviso.graeshoppe.service.dto.ProductDetailDTO;
 @Component
 public class DBWriter implements ItemWriter<ProductDetailDTO> {
 
+	private final Logger log = LoggerFactory.getLogger(DBWriter.class);
+
 	@Autowired
 	private ProductRepository productRepository;
 
 	@Autowired
 	StockCurrentRepository stockCurrentRepo;
 
+	@Autowired
+	ProductResource productResource;
+
+	@Autowired
+	StockCurrentResource stockCurrentResource;
+
+	@Autowired
+	ProductMapper productMapper;
+
+	@Autowired
+	StockCurrentMapper stockCurrentMapper;
+
 	@Override
 	public void write(List<? extends ProductDetailDTO> products) throws Exception {
 
 		System.out.println("Data Saved for Users:>>>>>>>>>>" + products);
-		Long i=0L;
+		Long i = 0L;
 		for (ProductDetailDTO p : products) {
-			
+
 			Product dto = new Product();
-		//	dto.setId(i++);
+
 			dto.setName(p.getName());
-			
+
+			dto.setId(p.getId());
+
+			log.debug(".................ID: .............." + p.getId());
+
 			dto.setSearchkey("");
-			
+
 			dto.setReference("");
-			
-			System.out.println("............... before save........... ");
-			
-			Product pro = productRepository.save(dto);
 
-			System.out.println("............... saved product:  " + pro);
+			ProductDTO productDto = productMapper.toDto(dto);
 
-			dto.setStockCurrent(new StockCurrent());
-			
-			//dto.getStockCurrent().setId(i++);
-			
-			dto.getStockCurrent().setSellPrice(p.getPrice());
+			ProductDTO pro = null;
 
-			stockCurrentRepo.save(dto.getStockCurrent());
+			if (dto.getId() == null) {
 
-			System.out.println(".............. saved stock: " + stockCurrentRepo.save(dto.getStockCurrent()));
+				log.debug("..............CREATE..................");
+
+				pro = productResource.createProduct(productDto).getBody();
+
+				dto.setStockCurrent(new StockCurrent());
+
+				dto.getStockCurrent().setSellPrice(p.getPrice());
+
+				StockCurrentDTO stockCurrentDTO = stockCurrentMapper.toDto(dto.getStockCurrent());
+
+				stockCurrentDTO.setProductId(pro.getId());
+
+				stockCurrentResource.createStockCurrent(stockCurrentDTO);
+
+			} else {
+				log.debug("..............UPDATE..................");
+				pro = productResource.updateProduct(productDto).getBody();
+
+				StockCurrentDTO stockCurrentDTO = stockCurrentResource.getStockCurrentByProductId(pro.getId())
+						.getBody();
+				log.debug("............Retrived stock ................." + stockCurrentDTO);
+
+				stockCurrentDTO.setSellPrice(p.getPrice());
+
+				stockCurrentResource.updateStockCurrent(stockCurrentDTO);
+
+			}
 
 		}
 	}

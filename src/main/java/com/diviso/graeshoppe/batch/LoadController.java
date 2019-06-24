@@ -188,7 +188,7 @@ public class LoadController {
 
         lineTokenizer.setDelimiter(",");
         lineTokenizer.setStrict(false);
-      lineTokenizer.setNames(new String[]{"name", "price"});
+      lineTokenizer.setNames(new String[]{"id","name", "price"});
   
         BeanWrapperFieldSetMapper<ProductDetailDTO> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
         fieldSetMapper.setTargetType(ProductDetailDTO.class);
