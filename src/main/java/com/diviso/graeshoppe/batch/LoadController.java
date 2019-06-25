@@ -133,9 +133,9 @@ public class LoadController {
 
 		JobExecution jobExecution = null;
 
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 1; i++) {
 
-			resources = new ByteArrayResource[2];
+			resources = new ByteArrayResource[1];
 
 			resources[i] = new ByteArrayResource(file);
 
