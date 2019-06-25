@@ -95,7 +95,7 @@ public class LoadController {
 	 */
 
 	@PostMapping("/load-products")
-	public BatchStatus load(@RequestBody List<MultipartFile> file) throws JobParametersInvalidException,
+	public BatchStatus load(@RequestBody MultipartFile file) throws JobParametersInvalidException,
 			JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, IOException {
 
 		Map<String, JobParameter> maps = new HashMap<>();
@@ -108,11 +108,11 @@ public class LoadController {
 
 		JobExecution jobExecution = null;
 
-		for (int i = 0; i < file.size(); i++) {
+		for (int i = 0; i < 2; i++) {
 
-			resources = new ByteArrayResource[file.size()];
+			resources = new ByteArrayResource[2];
 
-			resources[i] = new ByteArrayResource(file.get(i).getBytes());
+			resources[i] = new ByteArrayResource(file.getBytes());
 
 			System.out.println("file resource   " + i + "  " + resources[i]);
 
