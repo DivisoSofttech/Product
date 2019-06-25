@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.MultipartConfigElement;
+
 import org.jfree.util.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,6 +67,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartResolver;
 
 import com.diviso.graeshoppe.service.dto.ProductDetailDTO;
 
@@ -95,13 +98,26 @@ public class LoadController {
 
 
     private final Logger log = LoggerFactory.getLogger(LoadController.class);
+    
+    
+    @Bean
+    public MultipartConfigElement multipartConfigElement() {
+        return new MultipartConfigElement("");
+    }
+
+    @Bean
+    public MultipartResolver multipartResolver() {
+        org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(1000000);
+        return multipartResolver;
+    }
 
 	
 	/*
 	 * @Autowired Job job;
 	 */
 
-	@PostMapping("/load-products")
+	@PostMapping(value="/load-products",consumes = "multipart/form-data")
 	public BatchStatus load(@RequestPart("file") MultipartFile file) throws JobParametersInvalidException,
 			JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, IOException {
 
