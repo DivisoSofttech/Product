@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.jfree.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
@@ -66,6 +68,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.diviso.graeshoppe.service.dto.ProductDetailDTO;
 
+
 /**
  * TODO Provide a detailed description here
  * 
@@ -90,6 +93,10 @@ public class LoadController {
 	@Autowired
 	ItemWriter<ProductDetailDTO> itemWriter;
 
+
+    private final Logger log = LoggerFactory.getLogger(LoadController.class);
+
+	
 	/*
 	 * @Autowired Job job;
 	 */
@@ -98,6 +105,8 @@ public class LoadController {
 	public BatchStatus load(@RequestBody MultipartFile file) throws JobParametersInvalidException,
 			JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, IOException {
 
+		log.info("...............file................:   "+file);
+		
 		Map<String, JobParameter> maps = new HashMap<>();
 
 		maps.put("time", new JobParameter(System.currentTimeMillis()));
