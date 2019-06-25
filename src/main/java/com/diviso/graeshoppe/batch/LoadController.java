@@ -58,6 +58,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -92,7 +93,7 @@ public class LoadController {
 	/*@Autowired
 	Job job;*/
 
-	@RequestMapping(value="/load-product",consumes="multipart/form-data")
+	@RequestMapping(value="/load-product",consumes="multipart/form-data", method = RequestMethod.POST)
 	public BatchStatus load(@RequestPart("file") List<MultipartFile> file) throws JobParametersInvalidException,
 			JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, IOException {
 		
