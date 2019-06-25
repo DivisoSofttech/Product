@@ -77,132 +77,105 @@ public class LoadController {
 
 	@Autowired
 	JobLauncher jobLauncher;
-	
+
 	@Autowired
 	JobBuilderFactory jobBuilderFactory;
-	
+
 	@Autowired
 	StepBuilderFactory stepBuilderFactory;
-	
+
 	@Autowired
 	ItemProcessor<ProductDetailDTO, ProductDetailDTO> itemProcessor;
-	
+
 	@Autowired
 	ItemWriter<ProductDetailDTO> itemWriter;
 
-	/*@Autowired
-	Job job;*/
+	/*
+	 * @Autowired Job job;
+	 */
 
-	@RequestMapping(value="/load-product",consumes="multipart/form-data", method = RequestMethod.POST)
-	public BatchStatus load(@RequestPart("file") List<MultipartFile> file) throws JobParametersInvalidException,
+	@PostMapping("/load-products")
+	public BatchStatus load(@RequestBody List<MultipartFile> file) throws JobParametersInvalidException,
 			JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, IOException {
-		
+
 		Map<String, JobParameter> maps = new HashMap<>();
 
 		maps.put("time", new JobParameter(System.currentTimeMillis()));
-		
-		JobParameters parameters = new JobParameters(maps);
-		
-		ByteArrayResource[] resources=null;
-       
-		JobExecution jobExecution=null;
-		
-		for(int i=0;i<file.size();i++){
-			
-			 resources=new ByteArrayResource[file.size()];
-			 
-			 resources[i]=new ByteArrayResource(file.get(i).getBytes());
-		
-			System.out.println("file resource   "+i+"  "+resources[i]);
-		
-		
-		Job job=createJob(jobBuilderFactory, stepBuilderFactory, multiResourceItemReader(resources), itemProcessor, itemWriter);
-		 jobExecution = jobLauncher.run(job, parameters);
 
-		System.out.println("JobExecution: " + jobExecution.getStatus());
+		JobParameters parameters = new JobParameters(maps);  
 
-		System.out.println("Batch is Running..." + jobExecution.isRunning());
-		
+		ByteArrayResource[] resources = null;
+
+		JobExecution jobExecution = null;
+
+		for (int i = 0; i < file.size(); i++) {
+
+			resources = new ByteArrayResource[file.size()];
+
+			resources[i] = new ByteArrayResource(file.get(i).getBytes());
+
+			System.out.println("file resource   " + i + "  " + resources[i]);
+
+			Job job = createJob(jobBuilderFactory, stepBuilderFactory, multiResourceItemReader(resources),
+					itemProcessor, itemWriter);
+			jobExecution = jobLauncher.run(job, parameters);
+
+			System.out.println("JobExecution: " + jobExecution.getStatus());
+
+			System.out.println("Batch is Running..." + jobExecution.isRunning());
+
 		}
 		while (jobExecution.isRunning()) {
 			System.out.println("...");
 		}
 		return jobExecution.getStatus();
 	}
-	
-	
-	
-	
-    
-    public Job createJob(JobBuilderFactory jobBuilderFactory,
-                   StepBuilderFactory stepBuilderFactory, 
-                   ItemReader<ProductDetailDTO> itemReader,
-                   ItemProcessor<ProductDetailDTO, ProductDetailDTO> itemProcessor,
-                   ItemWriter<ProductDetailDTO> itemWriter
-    ) {
 
-        Step step = stepBuilderFactory.get("ETL-file-load")
-                .<ProductDetailDTO, ProductDetailDTO>chunk(1000)
-                .reader(itemReader)
-                .processor(itemProcessor)
-                .writer(itemWriter)
-                .build();
-        
+	public Job createJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
+			ItemReader<ProductDetailDTO> itemReader, ItemProcessor<ProductDetailDTO, ProductDetailDTO> itemProcessor,
+			ItemWriter<ProductDetailDTO> itemWriter) {
 
+		Step step = stepBuilderFactory.get("ETL-file-load").<ProductDetailDTO, ProductDetailDTO>chunk(1000)
+				.reader(itemReader).processor(itemProcessor).writer(itemWriter).build();
 
-        return jobBuilderFactory.get("ETL-Load")
-                .incrementer(new RunIdIncrementer())
-                .start(step)
-                .build();
-    }
+		return jobBuilderFactory.get("ETL-Load").incrementer(new RunIdIncrementer()).start(step).build();
+	}
 
-    
-         
-    
-    public MultiResourceItemReader<ProductDetailDTO> multiResourceItemReader(ByteArrayResource[] inputResources)
-    {
-        MultiResourceItemReader<ProductDetailDTO> resourceItemReader = new MultiResourceItemReader<ProductDetailDTO>();
-        resourceItemReader.setResources(inputResources);
-        resourceItemReader.setDelegate(itemReader());
-        return resourceItemReader;
-    }
-    
-    
-    
-    public FlatFileItemReader<ProductDetailDTO> itemReader() {
+	public MultiResourceItemReader<ProductDetailDTO> multiResourceItemReader(ByteArrayResource[] inputResources) {
+		MultiResourceItemReader<ProductDetailDTO> resourceItemReader = new MultiResourceItemReader<ProductDetailDTO>();
+		resourceItemReader.setResources(inputResources);
+		resourceItemReader.setDelegate(itemReader());
+		return resourceItemReader;
+	}
 
-        FlatFileItemReader<ProductDetailDTO> flatFileItemReader = new FlatFileItemReader<>();
-        
-        flatFileItemReader.setName("CSV-Reader");
-        flatFileItemReader.setLinesToSkip(1);
-        flatFileItemReader.setLineMapper(lineMapper());
-        
-        return flatFileItemReader;
-    }
-    
-    
-    public LineMapper<ProductDetailDTO> lineMapper() {
+	public FlatFileItemReader<ProductDetailDTO> itemReader() {
 
-    	
-        DefaultLineMapper<ProductDetailDTO> defaultLineMapper = new DefaultLineMapper<>();
-        DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
+		FlatFileItemReader<ProductDetailDTO> flatFileItemReader = new FlatFileItemReader<>();
 
-        lineTokenizer.setDelimiter(",");
-        lineTokenizer.setStrict(false);
-      lineTokenizer.setNames(new String[]{"id","name", "price"});
-  
-        BeanWrapperFieldSetMapper<ProductDetailDTO> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
-        fieldSetMapper.setTargetType(ProductDetailDTO.class);
-       
-        defaultLineMapper.setLineTokenizer(lineTokenizer);
-        defaultLineMapper.setFieldSetMapper(fieldSetMapper);
+		flatFileItemReader.setName("CSV-Reader");
+		flatFileItemReader.setLinesToSkip(1);
+		flatFileItemReader.setLineMapper(lineMapper());
 
-        return defaultLineMapper;
-    }
-	
-	
-	
-	
+		return flatFileItemReader;
+	}
+
+	public LineMapper<ProductDetailDTO> lineMapper() {
+
+		DefaultLineMapper<ProductDetailDTO> defaultLineMapper = new DefaultLineMapper<>();
+		DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
+
+		lineTokenizer.setDelimiter(",");
+		lineTokenizer.setStrict(false);
+		lineTokenizer.setNames(new String[] { "id", "name", "price" });
+
+		BeanWrapperFieldSetMapper<ProductDetailDTO> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
+		fieldSetMapper.setTargetType(ProductDetailDTO.class);
+
+		defaultLineMapper.setLineTokenizer(lineTokenizer);
+		defaultLineMapper.setFieldSetMapper(fieldSetMapper);
+
+		return defaultLineMapper;
+	}
 
 	@PostMapping("/upload-file")
 	public void uploadFile(@RequestPart("file") MultipartFile file) throws IOException {
@@ -211,7 +184,5 @@ public class LoadController {
 		Path path = Paths.get("src/main/resources/" + file.getOriginalFilename());
 		Files.write(path, bytes);
 	}
-	
-	  
-	
+
 }
