@@ -100,7 +100,7 @@ public class LoadController {
     private final Logger log = LoggerFactory.getLogger(LoadController.class);
     
     
-    @Bean
+ /*   @Bean
     public MultipartConfigElement multipartConfigElement() {
         return new MultipartConfigElement("");
     }
@@ -110,7 +110,7 @@ public class LoadController {
         org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
         multipartResolver.setMaxUploadSize(1000000);
         return multipartResolver;
-    }
+    }*/
 
 	
 	/*
