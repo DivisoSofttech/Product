@@ -118,7 +118,7 @@ public class LoadController {
 	 */
 
 	@PostMapping(value="/load-products",consumes = "multipart/form-data")
-	public BatchStatus load(@RequestParam("file") MultipartFile file) throws JobParametersInvalidException,
+	public BatchStatus load(@RequestBody byte[] file) throws JobParametersInvalidException,
 			JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, IOException {
 
 		log.info("...............file................:   "+file);
@@ -137,7 +137,7 @@ public class LoadController {
 
 			resources = new ByteArrayResource[2];
 
-			resources[i] = new ByteArrayResource(file.getBytes());
+			resources[i] = new ByteArrayResource(file);
 
 			System.out.println("file resource   " + i + "  " + resources[i]);
 
