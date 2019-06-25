@@ -117,8 +117,8 @@ public class LoadController {
 	 * @Autowired Job job;
 	 */
 
-	@PostMapping(value="/load-products")
-	public BatchStatus load(@RequestBody byte[] file) throws JobParametersInvalidException,
+	@PostMapping(value="/load-products",consumes = "multipart/form-data")
+	public BatchStatus load(@RequestParam("file") MultipartFile file) throws JobParametersInvalidException,
 			JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, IOException {
 
 		log.info("...............file................:   "+file);
@@ -133,11 +133,11 @@ public class LoadController {
 
 		JobExecution jobExecution = null;
 
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 2; i++) {
 
-			resources = new ByteArrayResource[1];
+			resources = new ByteArrayResource[2];
 
-			resources[i] = new ByteArrayResource(file);
+			resources[i] = new ByteArrayResource(file.getBytes());
 
 			System.out.println("file resource   " + i + "  " + resources[i]);
 
@@ -201,13 +201,13 @@ public class LoadController {
 
 		return defaultLineMapper;
 	}
-/*
+
 	@PostMapping("/upload-file")
 	public void uploadFile(@RequestPart("file") MultipartFile file) throws IOException {
 		System.out.println("file        ............        :" + file);
 		byte[] bytes = file.getBytes();
 		Path path = Paths.get("src/main/resources/" + file.getOriginalFilename());
 		Files.write(path, bytes);
-	}*/
+	}
 
 }
