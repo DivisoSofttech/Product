@@ -118,7 +118,7 @@ public class LoadController {
 	 */
 
 	@PostMapping(value="/load-products")
-	public BatchStatus load(@RequestBody MultipartFile file) throws JobParametersInvalidException,
+	public BatchStatus load(@RequestParam("file") MultipartFile file) throws JobParametersInvalidException,
 			JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, IOException {
 
 		log.info("...............file................:   "+file);
