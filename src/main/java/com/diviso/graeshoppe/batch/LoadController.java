@@ -117,7 +117,7 @@ public class LoadController {
 	 * @Autowired Job job;
 	 */
 
-	@PostMapping(value="/load-products",consumes = "multipart/form-data")
+	@PostMapping(value="/load-products")
 	public BatchStatus load(@RequestBody MultipartFile file) throws JobParametersInvalidException,
 			JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, IOException {
 
