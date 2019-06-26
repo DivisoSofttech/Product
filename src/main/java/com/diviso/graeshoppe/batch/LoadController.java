@@ -203,7 +203,7 @@ public class LoadController {
 	}
 
 	@PostMapping("/upload-file")
-	public void uploadFile(@RequestPart("file") MultipartFile file) throws IOException {
+	public void uploadFile(@RequestBody MultipartFile file) throws IOException {
 		System.out.println("file        ............        :" + file);
 		byte[] bytes = file.getBytes();
 		Path path = Paths.get("src/main/resources/" + file.getOriginalFilename());
