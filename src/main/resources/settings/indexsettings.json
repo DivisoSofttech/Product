@@ -8,7 +8,7 @@
       },
       "tokenizer": {
         "index_tokenizer": {
-          "type": "edge_ngram",
+          "type": "ngram",
           "min_gram": 2,
           "max_gram": 10,
           "token_chars": [
