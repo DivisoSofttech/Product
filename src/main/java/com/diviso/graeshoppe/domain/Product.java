@@ -24,7 +24,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "product")
 @Document(indexName = "product")
-//@Setting(settingPath = "settings/indexsettings.json")
+@Setting(settingPath = "settings/indexsettings.json")
 //@Mapping(mappingPath = "mappings/productmapping.json")
 public class Product implements Serializable {
 
