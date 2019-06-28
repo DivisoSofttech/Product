@@ -18,7 +18,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "category")
 @Document(indexName = "category")
-//@Setting(settingPath = "settings/indexsettings.json")
+@Setting(settingPath = "settings/indexsettings.json")
 //@Mapping(mappingPath = "mappings/categorymappings.json")
 public class Category implements Serializable {
 
