@@ -10,10 +10,12 @@
         "index_tokenizer": {
           "type": "ngram",
           "min_gram": 2,
-          "max_gram": 15,
-          "token_chars": [
+          "max_gram": 10,
+           "token_chars": [
             "letter",
-            "digit"
+            "digit",
+            "punctuation",
+            "symbol"
           ]
         }
       }
