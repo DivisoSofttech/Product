@@ -3,7 +3,10 @@
     "analysis": {
       "analyzer": {
         "index_analyzer": {
-          "tokenizer": "index_tokenizer"
+          "tokenizer": "index_tokenizer",
+          "filter": [
+            "lowercase"       
+          ]
         }
       },
       "tokenizer": {
